@@ -1,7 +1,7 @@
 ﻿class global
 {
     public static int startscore = 0;//初始得分
-    public static double travel_speed = 5;//旅行速度
+    public static double travel_speed = 1.5;//旅行速度
     public static int develop = 10;//发展速度
     public static int cooperation = 5;//合作的时候额外的发展速度
     public static int attack = -15;//战争的时候额外的发展速度

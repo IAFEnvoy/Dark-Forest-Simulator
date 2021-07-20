@@ -5,6 +5,7 @@ using UnityEngine.UI;
 public class Calculate : MonoBehaviour
 {
     public Material red, yellow, green;
+    public Material redl, yellowl, greenl;
     // Start is called before the first frame update
     void Start()
     {
@@ -71,7 +72,7 @@ public class Calculate : MonoBehaviour
                 {
                     stars[it].helpcnt -= 1;
                 }
-                GameObject.Find("Canvas/Message").GetComponent<Text>().text = i.ToString() + "号文明被消灭，存活了" + (time - stars[i].lifetime).ToString() + "年";
+                GameObject.Find("Canvas/Message1").GetComponent<Text>().text = i.ToString() + "号文明被消灭，存活了" + (time - stars[i].lifetime).ToString() + "年";
                 Destroy(GameObject.Find("Stars/Star" + i.ToString()).GetComponent<Transform>().gameObject);
                 continue;
             }
@@ -135,11 +136,13 @@ public class Calculate : MonoBehaviour
                     _ship.name = "Ship";
                     _ship.transform.localScale = new Vector3(2, 2, 2);
                     //_ship.AddComponent<HighlightableObject>();
+                    _ship.AddComponent<TrailRenderer>();
+                    _ship.GetComponent<TrailRenderer>().time = 1;
                     switch (ship.type)
                     {
-                        case 1: { _ship.AddComponent<HighLightControlRed>(); _ship.GetComponent<Renderer>().material = red; break; }
-                        case -1: { _ship.AddComponent<HighLightControlYellow>(); _ship.GetComponent<Renderer>().material = yellow; break; }
-                        case 0: { _ship.AddComponent<HighLightControlBlue>(); _ship.GetComponent<Renderer>().material = green; break; }
+                        case 1: { _ship.AddComponent<HighLightControlRed>(); _ship.GetComponent<Renderer>().material = red; _ship.GetComponent<TrailRenderer>().material = redl; break; }
+                        case -1: { _ship.AddComponent<HighLightControlYellow>(); _ship.GetComponent<Renderer>().material = yellow; _ship.GetComponent<TrailRenderer>().material = yellowl; break; }
+                        case 0: { _ship.AddComponent<HighLightControlBlue>(); _ship.GetComponent<Renderer>().material = green; _ship.GetComponent<TrailRenderer>().material = greenl; break; }
                     }
                     _ship.transform.parent = GameObject.Find("Stars/Star" + i.ToString()).GetComponent<Transform>();
                     _ship.transform.localPosition = new Vector3(0, 0, 0);
