@@ -11,7 +11,7 @@ public class HighLightControlBlue : MonoBehaviour
     {
         //初始化组件
         m_ho = GetComponent<HighlightableObject>();
-        m_ho.FlashingOn(Color.blue, Color.blue, 1f);
+        //m_ho.FlashingOn(Color.blue, Color.blue, 1f);
         //m_ho.FlashingOn(Color.gray,Color.green);
         //m_ho.FlashingParams(Color.green,Color.gray, 1f);
         //m_ho.FlashingSwitch();

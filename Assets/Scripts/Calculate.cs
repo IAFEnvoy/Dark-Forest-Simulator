@@ -8,7 +8,7 @@ public class Calculate : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        for(int i = 0; i < 50; i++)
+        for (int i = 0; i < 50; i++)
         {
             spawnstar();
         }
@@ -20,7 +20,7 @@ public class Calculate : MonoBehaviour
     void spawnstar()
     {
         int asd = rd.Next() % 3 - 1;
-        stars.Add(new Stars((float)((rd.NextDouble() - 0.5) * 2 * global.rangex), (float)((rd.NextDouble() - 0.5) * 2 * global.rangey), 
+        stars.Add(new Stars((float)((rd.NextDouble() - 0.5) * 2 * global.rangex), (float)((rd.NextDouble() - 0.5) * 2 * global.rangey),
             (float)((rd.NextDouble() - 0.5) * 2 * global.rangez), asd, rd.Next() % 2 == 1, time));
 
         GameObject star = GameObject.CreatePrimitive(PrimitiveType.Sphere);
@@ -50,7 +50,7 @@ public class Calculate : MonoBehaviour
             spawnstar();
         }
 
-        for(int i=0;i<stars.Count;i++)
+        for (int i = 0; i < stars.Count; i++)
         {
             if (!stars[i].life) continue;
             if (stars[i].score <= 0)
@@ -70,9 +70,13 @@ public class Calculate : MonoBehaviour
                 {
                     //execute ships
                     if (!stars[stars[i].ship.target].life)//判断目标是否死亡
+                    {
+                        Destroy(GameObject.Find("Stars/Star" + i.ToString() + "/Ship").GetComponent<Transform>().gameObject);
                         stars[i].havetarget = false;
+                    }
                     else if (stars[i].ship.stats == 0)//飞行状态
                     {
+                        GameObject.Find("Stars/Star" + i.ToString() + "/Ship").GetComponent<Transform>().position += stars[i].ship.direction;
                         stars[i].ship.distance += global.travel_speed;
                         if (stars[i].ship.distance >= stars[i].ship.total)//到达目的地
                             stars[i].ship.stats = 1;
@@ -81,10 +85,12 @@ public class Calculate : MonoBehaviour
                     {
                         if (stars[i].ship.type == -1)//没有效果，直接返回
                         {
+                            Destroy(GameObject.Find("Stars/Star" + i.ToString() + "/Ship").GetComponent<Transform>().gameObject);
                             stars[i].havetarget = false;
                         }
-                        if(stars[i].ship.type == 0)//加入合作列表
+                        if (stars[i].ship.type == 0)//加入合作列表
                         {
+                            Destroy(GameObject.Find("Stars/Star" + i.ToString() + "/Ship").GetComponent<Transform>().gameObject);
                             stars[i].havetarget = false;
                             stars[i].helplist.Add(stars[i].ship.target);
                             stars[stars[i].ship.target].helpcnt += 1;
@@ -92,7 +98,10 @@ public class Calculate : MonoBehaviour
                         if (stars[i].ship.type == 1)//打起来了。。。
                         {
                             if (stars[i].ship.defense <= 0)
+                            {
+                                Destroy(GameObject.Find("Stars/Star" + i.ToString() + "/Ship").GetComponent<Transform>().gameObject);
                                 stars[i].havetarget = false;
+                            }
                             else
                             {
                                 stars[stars[i].ship.target].score -= global.attack;
@@ -108,6 +117,19 @@ public class Calculate : MonoBehaviour
                     stars[i].havetarget = true;
                     stars[i].ship = ship;
                     Debug.Log(i.ToString() + "号文明发出飞船，目标" + target.ToString() + "号文明");
+
+                    GameObject _ship = GameObject.CreatePrimitive(PrimitiveType.Sphere);
+                    _ship.transform.position = new Vector3(stars[stars.Count - 1].x, stars[stars.Count - 1].y, stars[stars.Count - 1].z);
+                    _ship.name = "Ship";
+                    _ship.transform.localScale = new Vector3(5, 5, 5);
+                    switch (ship.type)
+                    {
+                        case 1: { _ship.AddComponent<HighLightControlRed>(); _ship.GetComponent<Renderer>().material = red; break; }
+                        case -1: { _ship.AddComponent<HighLightControlYellow>(); _ship.GetComponent<Renderer>().material = yellow; break; }
+                        case 0: { _ship.AddComponent<HighLightControlBlue>(); _ship.GetComponent<Renderer>().material = green; break; }
+                    }
+                    _ship.transform.parent = GameObject.Find("Stars/Star" + i.ToString()).GetComponent<Transform>();
+                    _ship.transform.localPosition = new Vector3(0, 0, 0);
                 }
             }
             stars[i].score += global.develop + stars[i].helpcnt * global.cooperation;
