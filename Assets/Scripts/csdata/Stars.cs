@@ -2,17 +2,21 @@
 
 class Stars
 {
-    public Stars(float x, float y, int type, bool isout, int lifetime)
+    public Stars(float x, float y, float z, int type, bool isout, int lifetime)
     {
         this.x = x;
         this.y = y;
+        this.z = z;
         this.score = global.startscore;
         this.life = true;
         this.type = type;
         this.isout = isout;
         this.lifetime = lifetime;
+        this.havetarget = false;
+        this.helpcnt = 0;
+        this.helplist = new List<int>();
     }
-    public float x, y;//二维坐标（本来想搞三维，但是怕看不清楚）
+    public float x, y, z;//二维坐标（本来想搞三维，但是怕看不清楚）
     public int score;//得分
     public bool life;//是否存活，score为0时自动归为false
     public int type;//文明类型，-1为和平型，0为中立型，1为攻击型
