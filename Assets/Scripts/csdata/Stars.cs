@@ -15,6 +15,8 @@ class Stars
         this.havetarget = false;
         this.helpcnt = 0;
         this.helplist = new List<int>();
+
+        if (this.type == 1) this.isout = true;//攻击性文明默认外向
     }
     public float x, y, z;//三维坐标
     public int score;//得分

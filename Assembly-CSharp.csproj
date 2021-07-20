@@ -72,6 +72,7 @@
     <Compile Include="Assets\Scripts\HighLightControlBlue.cs" />
     <Compile Include="Assets\Scripts\HighLightControlRed.cs" />
     <Compile Include="Assets\Scripts\HighLightControlYellow.cs" />
+    <Compile Include="Assets\Scripts\LeftupCorner.cs" />
     <Compile Include="Assets\Scripts\TopRightCorner.cs" />
     <Reference Include="Unity.TextMeshPro.Editor">
       <HintPath>E:/unity/Dark-Forest-Stimulator/Dark-Forest-Stimulator/Library/ScriptAssemblies/Unity.TextMeshPro.Editor.dll</HintPath>

@@ -8,6 +8,12 @@ public class Calculate : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        if (global.peace + global.middle + global.attacks != 100)
+        {
+            execute = false;
+            Debug.LogError("生成概率出错，无法执行程序");
+        }
+
         for (int i = 0; i < 50; i++)
         {
             spawnstar();
@@ -19,7 +25,11 @@ public class Calculate : MonoBehaviour
     System.Random rd = new System.Random();
     void spawnstar()
     {
-        int asd = rd.Next() % 3 - 1;
+        int num = rd.Next() % 100, asd;
+        if (0 <= num && num < global.peace) asd = -1;
+        else if (global.peace <= num && num < global.peace + global.middle) asd = 0;
+        else asd = 1;
+
         stars.Add(new Stars((float)((rd.NextDouble() - 0.5) * 2 * global.rangex), (float)((rd.NextDouble() - 0.5) * 2 * global.rangey),
             (float)((rd.NextDouble() - 0.5) * 2 * global.rangez), asd, rd.Next() % 2 == 1, time));
 
@@ -27,6 +37,7 @@ public class Calculate : MonoBehaviour
         star.transform.position = new Vector3(stars[stars.Count - 1].x, stars[stars.Count - 1].y, stars[stars.Count - 1].z);
         star.name = "Star" + (stars.Count - 1).ToString();
         star.transform.localScale = new Vector3(5, 5, 5);
+        //star.AddComponent<HighlightableObject>();
         switch (asd)
         {
             case 1: { star.AddComponent<HighLightControlRed>(); star.GetComponent<Renderer>().material = red; break; }
@@ -53,14 +64,14 @@ public class Calculate : MonoBehaviour
         for (int i = 0; i < stars.Count; i++)
         {
             if (!stars[i].life) continue;
-            if (stars[i].score <= 0)
+            if (stars[i].score < 0)
             {
                 stars[i].life = false;
                 foreach (int it in stars[i].helplist)
                 {
                     stars[it].helpcnt -= 1;
                 }
-                Debug.LogWarning(i.ToString() + "号文明被消灭，存活了" + (time - stars[i].lifetime).ToString() + "年");
+                GameObject.Find("Canvas/Message").GetComponent<Text>().text = i.ToString() + "号文明被消灭，存活了" + (time - stars[i].lifetime).ToString() + "年";
                 Destroy(GameObject.Find("Stars/Star" + i.ToString()).GetComponent<Transform>().gameObject);
                 continue;
             }
@@ -104,8 +115,8 @@ public class Calculate : MonoBehaviour
                             }
                             else
                             {
-                                stars[stars[i].ship.target].score -= global.attack;
-                                stars[i].ship.defense -= global.attack;
+                                stars[stars[i].ship.target].score += global.attack;
+                                stars[i].ship.defense += global.attack;
                             }
                         }
                     }
@@ -116,12 +127,14 @@ public class Calculate : MonoBehaviour
                     Ships ship = new Ships(i, target, stars[i].score / global.defensetimes, stars[i], stars[target]);
                     stars[i].havetarget = true;
                     stars[i].ship = ship;
-                    Debug.Log(i.ToString() + "号文明发出飞船，目标" + target.ToString() + "号文明");
+
+                    GameObject.Find("Canvas/Message").GetComponent<Text>().text = i.ToString() + "号文明发出飞船，目标" + target.ToString() + "号文明";
 
                     GameObject _ship = GameObject.CreatePrimitive(PrimitiveType.Sphere);
                     _ship.transform.position = new Vector3(stars[stars.Count - 1].x, stars[stars.Count - 1].y, stars[stars.Count - 1].z);
                     _ship.name = "Ship";
-                    _ship.transform.localScale = new Vector3(5, 5, 5);
+                    _ship.transform.localScale = new Vector3(2, 2, 2);
+                    //_ship.AddComponent<HighlightableObject>();
                     switch (ship.type)
                     {
                         case 1: { _ship.AddComponent<HighLightControlRed>(); _ship.GetComponent<Renderer>().material = red; break; }
