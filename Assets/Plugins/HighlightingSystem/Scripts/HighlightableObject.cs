@@ -780,8 +780,12 @@ public class HighlightableObject : MonoBehaviour
             {
                 for (int i = 0; i < highlightableRenderers.Count; i++)
                 {
-                    highlightableRenderers[i].goCached.layer = layersCache[i];
-                    highlightableRenderers[i].SetState(false);
+                    try
+                    {
+                        highlightableRenderers[i].goCached.layer = layersCache[i];
+                        highlightableRenderers[i].SetState(false);
+                    }
+                    catch { }
                 }
             }
         }

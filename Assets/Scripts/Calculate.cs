@@ -15,7 +15,7 @@ public class Calculate : MonoBehaviour
             Debug.LogError("生成概率出错，无法执行程序");
         }
 
-        for (int i = 0; i < 50; i++)
+        for (int i = 0; i < global.startcnt; i++)
         {
             spawnstar();
         }
@@ -38,12 +38,12 @@ public class Calculate : MonoBehaviour
         star.transform.position = new Vector3(stars[stars.Count - 1].x, stars[stars.Count - 1].y, stars[stars.Count - 1].z);
         star.name = "Star" + (stars.Count - 1).ToString();
         star.transform.localScale = new Vector3(5, 5, 5);
-        //star.AddComponent<HighlightableObject>();
+        star.AddComponent<HighlightableObject>();
         switch (asd)
         {
             case 1: { star.AddComponent<HighLightControlRed>(); star.GetComponent<Renderer>().material = red; break; }
-            case -1: { star.AddComponent<HighLightControlYellow>(); star.GetComponent<Renderer>().material = green; break; }
-            case 0: { star.AddComponent<HighLightControlBlue>(); star.GetComponent<Renderer>().material = yellow; break; }
+            case -1: { star.AddComponent<HighLightControlGreen>(); star.GetComponent<Renderer>().material = green; break; }
+            case 0: { star.AddComponent<HighLightControlYellow>(); star.GetComponent<Renderer>().material = yellow; break; }
         }
         star.transform.parent = GameObject.Find("Stars").GetComponent<Transform>();
     }
@@ -57,10 +57,11 @@ public class Calculate : MonoBehaviour
         GameObject.Find("Canvas/Time").GetComponent<Text>().text = time.ToString() + "年";
 
         //生成新文明
-        if (rd.Next() % global.spawnprobability == 0)
-        {
-            spawnstar();
-        }
+        if (global.allowspawn)
+            if (rd.Next() % global.spawnprobability == 0)
+            {
+                spawnstar();
+            }
 
         for (int i = 0; i < stars.Count; i++)
         {
@@ -88,7 +89,11 @@ public class Calculate : MonoBehaviour
                     }
                     else if (stars[i].ship.stats == 0)//飞行状态
                     {
-                        GameObject.Find("Stars/Star" + i.ToString() + "/Ship").GetComponent<Transform>().position += stars[i].ship.direction;
+                        try
+                        {
+                            GameObject.Find("Stars/Star" + i.ToString() + "/Ship").GetComponent<Transform>().position += stars[i].ship.direction;
+                        }
+                        catch { }
                         stars[i].ship.distance += global.travel_speed;
                         if (stars[i].ship.distance >= stars[i].ship.total)//到达目的地
                             stars[i].ship.stats = 1;
@@ -124,6 +129,7 @@ public class Calculate : MonoBehaviour
                 }
                 else
                 {//新建飞船实体
+                    if (stars.Count == 1) continue;//欸，人呢？
                     int target = rd.Next() % stars.Count;
                     Ships ship = new Ships(i, target, stars[i].score / global.defensetimes, stars[i], stars[target]);
                     stars[i].havetarget = true;
@@ -135,14 +141,13 @@ public class Calculate : MonoBehaviour
                     _ship.transform.position = new Vector3(stars[stars.Count - 1].x, stars[stars.Count - 1].y, stars[stars.Count - 1].z);
                     _ship.name = "Ship";
                     _ship.transform.localScale = new Vector3(2, 2, 2);
-                    //_ship.AddComponent<HighlightableObject>();
                     _ship.AddComponent<TrailRenderer>();
                     _ship.GetComponent<TrailRenderer>().time = 1;
                     switch (ship.type)
                     {
-                        case 1: { _ship.AddComponent<HighLightControlRed>(); _ship.GetComponent<Renderer>().material = red; _ship.GetComponent<TrailRenderer>().material = redl; break; }
-                        case -1: { _ship.AddComponent<HighLightControlYellow>(); _ship.GetComponent<Renderer>().material = yellow; _ship.GetComponent<TrailRenderer>().material = yellowl; break; }
-                        case 0: { _ship.AddComponent<HighLightControlBlue>(); _ship.GetComponent<Renderer>().material = green; _ship.GetComponent<TrailRenderer>().material = greenl; break; }
+                        case 1: { _ship.GetComponent<Renderer>().material = red; _ship.GetComponent<TrailRenderer>().material = redl; break; }
+                        case -1: { _ship.GetComponent<Renderer>().material = yellow; _ship.GetComponent<TrailRenderer>().material = yellowl; break; }
+                        case 0: { _ship.GetComponent<Renderer>().material = green; _ship.GetComponent<TrailRenderer>().material = greenl; break; }
                     }
                     _ship.transform.parent = GameObject.Find("Stars/Star" + i.ToString()).GetComponent<Transform>();
                     _ship.transform.localPosition = new Vector3(0, 0, 0);

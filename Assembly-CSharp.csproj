@@ -69,7 +69,7 @@
     <Compile Include="Assets\Scripts\csdata\global.cs" />
     <Compile Include="Assets\Scripts\csdata\Ship.cs" />
     <Compile Include="Assets\Scripts\csdata\Stars.cs" />
-    <Compile Include="Assets\Scripts\HighLightControlBlue.cs" />
+    <Compile Include="Assets\Scripts\HighLightControlGreen.cs" />
     <Compile Include="Assets\Scripts\HighLightControlRed.cs" />
     <Compile Include="Assets\Scripts\HighLightControlYellow.cs" />
     <Compile Include="Assets\Scripts\LeftupCorner.cs" />
