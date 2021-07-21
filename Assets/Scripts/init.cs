@@ -30,7 +30,7 @@ public class init : MonoBehaviour
             global.middle = int.Parse(sr.ReadLine());
             global.attacks = int.Parse(sr.ReadLine());
             sr.Close();
-            GameObject.Find("Canvas/Message").GetComponent<Text>().text = "自定义参数读取成功！";
+            GameObject.Find("Canvas/Message1").GetComponent<Text>().text = "自定义参数读取成功！";
         }
         else
             GameObject.Find("Canvas/Message1").GetComponent<Text>().text = "没有找到自定义参数文件，将使用默认值。";

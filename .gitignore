@@ -364,3 +364,6 @@ FodyWeavers.xsd
 /Temp
 /Library
 /ProjectSettings
+
+#Output Folder
+/Outputs
