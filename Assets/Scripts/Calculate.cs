@@ -53,6 +53,8 @@ public class Calculate : MonoBehaviour
     {
         if (!execute) return;
 
+        GameObject.Find("Canvas/ScoreBoard").GetComponent<Text>().text="";
+
         time += 1;//加一年
         GameObject.Find("Canvas/Time").GetComponent<Text>().text = time.ToString() + "年";
 
@@ -77,6 +79,8 @@ public class Calculate : MonoBehaviour
                 Destroy(GameObject.Find("Stars/Star" + i.ToString()).GetComponent<Transform>().gameObject);
                 continue;
             }
+
+            stars[i].score += global.develop + stars[i].helpcnt * global.cooperation;
             if (stars[i].isout)
             {
                 if (stars[i].havetarget)
@@ -127,9 +131,11 @@ public class Calculate : MonoBehaviour
                         }
                     }
                 }
-                else
-                {//新建飞船实体
+                else//新建飞船实体
+                {
                     if (stars.Count == 1) continue;//欸，人呢？
+                    if(stars[i].score<global.cooldowntime) continue;//发展不足，同志仍需努力(～￣▽￣)～
+
                     int target = rd.Next() % stars.Count;
                     Ships ship = new Ships(i, target, stars[i].score / global.defensetimes, stars[i], stars[target]);
                     stars[i].havetarget = true;
@@ -153,7 +159,11 @@ public class Calculate : MonoBehaviour
                     _ship.transform.localPosition = new Vector3(0, 0, 0);
                 }
             }
-            stars[i].score += global.develop + stars[i].helpcnt * global.cooperation;
+        }
+        for(int i=0;i<stars.Count;i++){
+            if(stars[i].life)
+                GameObject.Find("Canvas/ScoreBoard").GetComponent<Text>().text+=i.ToString()+"号文明得分："+stars[i].score.ToString()
+                    +",文明类型:"+(stars[i].isout?"外向型":"内向型")+"\n";
         }
     }
 }
