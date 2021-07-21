@@ -62,6 +62,7 @@
      <Compile Include="Assets\Scripts\HighLightControlGreen.cs" />
      <Compile Include="Assets\Scripts\HighLightControlRed.cs" />
      <Compile Include="Assets\Scripts\HighLightControlYellow.cs" />
+     <Compile Include="Assets\Scripts\init.cs" />
      <Compile Include="Assets\Scripts\TopLeftCorner.cs" />
      <Compile Include="Assets\Scripts\TopRightCorner.cs" />
  <Reference Include="Unity.TextMeshPro.Editor">
