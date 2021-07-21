@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-public class LeftupCorner : MonoBehaviour
+public class BottomRightCorner : MonoBehaviour
 {
     int width, height;
     public int mewidth, meheight;
