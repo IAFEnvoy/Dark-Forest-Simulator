@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -15,8 +16,51 @@ public class Calculate : MonoBehaviour
             execute = false;
             Debug.LogError("生成概率出错，无法执行程序");
         }
+        Load();
+    }
+    public void Load()
+    {
+        time = 0;
+        ReadGlobal();
+        GameObject.Find("Canvas/Message").GetComponent<Text>().text = "初始化完毕";
+        for (int i = 0; i < stars.Count; i++)
+        {
+            if (stars[i].life)
+            {
+                Destroy(GameObject.Find("Stars/Star" + i.ToString()).GetComponent<Transform>().gameObject);
+            }
+        }
+        stars.Clear(); deathcnt = 0; 
         for (int i = 0; i < global.startcnt; i++)
             spawnstar();
+    }
+    void ReadGlobal()
+    {
+        if (File.Exists(Application.dataPath + @"\start_up_parameter.txt"))
+        {
+            GameObject.Find("Canvas/Message1").GetComponent<Text>().text = "自定义参数读取失败，将使用默认值。";
+            StreamReader sr = new StreamReader(Application.dataPath + @"\start_up_parameter.txt");
+            global.startcnt = int.Parse(sr.ReadLine());
+            global.startscore = int.Parse(sr.ReadLine());
+            global.travel_speed = double.Parse(sr.ReadLine());
+            global.develop = int.Parse(sr.ReadLine());
+            global.cooperation = int.Parse(sr.ReadLine());
+            global.attack = int.Parse(sr.ReadLine());
+            global.allowspawn = bool.Parse(sr.ReadLine());
+            global.spawnprobability = int.Parse(sr.ReadLine());
+            global.cooldowntime = int.Parse(sr.ReadLine());
+            global.rangex = double.Parse(sr.ReadLine());
+            global.rangey = double.Parse(sr.ReadLine());
+            global.rangez = double.Parse(sr.ReadLine());
+            global.defensetimes = int.Parse(sr.ReadLine());
+            global.peace = int.Parse(sr.ReadLine());
+            global.middle = int.Parse(sr.ReadLine());
+            global.attacks = int.Parse(sr.ReadLine());
+            sr.Close();
+            GameObject.Find("Canvas/Message1").GetComponent<Text>().text = "自定义参数读取成功！";
+        }
+        else
+            GameObject.Find("Canvas/Message1").GetComponent<Text>().text = "没有找到自定义参数文件，将使用默认值。";
     }
     public static bool execute = true, sortscore = false;
     int time = 0;

@@ -24,6 +24,7 @@ public class camera_move : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if(KeyBoardControl.show) return;
         if (Input.GetMouseButtonDown(0))
         {
             now = Input.mousePosition;
