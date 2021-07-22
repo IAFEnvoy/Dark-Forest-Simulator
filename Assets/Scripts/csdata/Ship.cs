@@ -2,17 +2,22 @@
 using UnityEngine;
 class Ships
 {
-    public Ships(int start, int target, double defense,Stars startstar,Stars targetstar)
+    public Ships(int start, int target, double defense, Stars startstar, Stars targetstar)
     {
         this.start = start;
         this.target = target;
         this.distance = 0;
-        this.total = Math.Sqrt((startstar.x - targetstar.x) * (startstar.x - targetstar.x) 
-            + (startstar.y - targetstar.y) * (startstar.y - targetstar.y)+ (startstar.z - targetstar.z) * (startstar.z - targetstar.z));
+        this.total = Math.Sqrt((startstar.x - targetstar.x) * (startstar.x - targetstar.x)
+            + (startstar.y - targetstar.y) * (startstar.y - targetstar.y) + (startstar.z - targetstar.z) * (startstar.z - targetstar.z));
         this.stats = 0;
         this.defense = defense;
         if (startstar.type == 1) type = 1;
-        if (startstar.type == -1) type = 0;
+        if (startstar.type == -1)
+        {
+            if (targetstar.type == 1) type = 1;
+            if (targetstar.type == -1) type = 0;
+            if (targetstar.type == 0) type = 0;
+        }
         if (startstar.type == 0)
         {
             if (targetstar.type == 1) type = 1;
