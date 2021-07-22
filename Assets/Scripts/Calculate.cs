@@ -193,15 +193,30 @@ public class Calculate : MonoBehaviour
                     }
             GC.Collect();
             for (int i = 0; i < stars.Count; i++)
-                if (temp[i].life)
+                if (temp[i].life){
+                    switch (temp[i].type)
+                    {
+                        case 1: { GameObject.Find("Canvas/ScoreBoard").GetComponent<Text>().text +="<color=#FF0000>"; break; }
+                        case -1: { GameObject.Find("Canvas/ScoreBoard").GetComponent<Text>().text +="<color=#00FF00>"; break; }
+                        case 0: { GameObject.Find("Canvas/ScoreBoard").GetComponent<Text>().text +="<color=#FFFF00>"; break; }
+                    }
                     GameObject.Find("Canvas/ScoreBoard").GetComponent<Text>().text += temp[i].num.ToString() + "号文明得分：" + temp[i].score.ToString()
-                        + ",文明类型:" + (temp[i].isout ? "外向型" : "内向型") + "\n";
+                        + ",文明类型:" + (temp[i].isout ? "外向型" : "内向型") + "</color>\n";
+                }
+                    
             GC.Collect();
         }
         else
             for (int i = 0; i < stars.Count; i++)
-                if (stars[i].life)
+                if (stars[i].life){
+                    switch (stars[i].type)
+                    {
+                        case 1: { GameObject.Find("Canvas/ScoreBoard").GetComponent<Text>().text +="<color=#FF0000>"; break; }
+                        case -1: { GameObject.Find("Canvas/ScoreBoard").GetComponent<Text>().text +="<color=#00FF00>"; break; }
+                        case 0: { GameObject.Find("Canvas/ScoreBoard").GetComponent<Text>().text +="<color=#FFFF00>"; break; }
+                    }
                     GameObject.Find("Canvas/ScoreBoard").GetComponent<Text>().text += stars[i].num.ToString() + "号文明得分：" + stars[i].score.ToString()
-                        + ",文明类型:" + (stars[i].isout ? "外向型" : "内向型") + "\n";
+                        + ",文明类型:" + (stars[i].isout ? "外向型" : "内向型") + "</color>\n";
+                }
     }
 }
