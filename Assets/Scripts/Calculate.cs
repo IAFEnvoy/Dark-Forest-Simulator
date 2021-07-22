@@ -30,10 +30,11 @@ public class Calculate : MonoBehaviour
                 Destroy(GameObject.Find("Stars/Star" + i.ToString()).GetComponent<Transform>().gameObject);
             }
         }
-        stars.Clear(); deathcnt = 0; 
+        stars.Clear(); deathcnt = 0;
         for (int i = 0; i < global.startcnt; i++)
             spawnstar();
     }
+    public static bool reload = false;
     void ReadGlobal()
     {
         if (File.Exists(Application.dataPath + @"\start_up_parameter.txt"))
@@ -98,6 +99,7 @@ public class Calculate : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if (reload) { reload = false; Load(); }
         if (!execute)
         {
             for (int i = 0; i < stars.Count; i++)

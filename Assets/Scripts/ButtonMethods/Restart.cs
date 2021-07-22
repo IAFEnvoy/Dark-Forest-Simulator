@@ -10,8 +10,7 @@ public class Restart : MonoBehaviour
     }
     void Click()
     {
-        Calculate cal=new Calculate();
-        cal.Load();
+        Calculate.reload=true;
         KeyBoardControl.escapeclick = true;
     }
 }
