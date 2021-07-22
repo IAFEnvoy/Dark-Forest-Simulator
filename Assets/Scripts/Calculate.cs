@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -163,7 +164,8 @@ public class Calculate : MonoBehaviour
             }
         }
 
-        GameObject.Find("Canvas/ScoreBoard").GetComponent<Text>().text = "文明总数：" + (stars.Count - deathcnt).ToString() + "\n";
+        GameObject.Find("Canvas/ScoreBoard").GetComponent<Text>().text = "文明总数：" + (stars.Count - deathcnt).ToString() 
+            +"，fps:"+ Math.Round(1.0 / Time.deltaTime).ToString() + "\n";
         for (int i = 0; i < stars.Count; i++)
         {
             if (stars[i].life)
