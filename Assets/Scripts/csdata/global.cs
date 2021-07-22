@@ -16,6 +16,6 @@
     public static bool allowtechboom = true;//是否允许技术爆炸
     public static int techboommax = 5;//最大允许技术爆炸次数
     public static int techboom_addon = 5;//每进行一次技术爆炸发展速度的加成
-    public static int techboom_probability=10000;//技术爆炸概率，填1000则每一次Update有1/1000的概率发生技术爆炸
+    public static int techboom_probability = 10000;//技术爆炸概率，填1000则每一次Update有1/1000的概率发生技术爆炸
 }
 

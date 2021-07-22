@@ -45,7 +45,12 @@ public class Calculate : MonoBehaviour
         }
         star.transform.parent = GameObject.Find("Stars").GetComponent<Transform>();
     }
-
+    bool checkhelplist(List<int> helplist, int number)
+    {
+        foreach (int l in helplist)
+            if (number == l) return false;
+        return true;
+    }
     // Update is called once per frame
     void Update()
     {
@@ -93,11 +98,12 @@ public class Calculate : MonoBehaviour
             stars[i].score += global.develop + stars[i].helpcnt * global.cooperation + stars[i].techboomcnt * global.techboommax;//加分
             if (global.allowtechboom)//技术爆炸代码
             {
-                if (rd.Next() % global.techboom_probability == 0)
-                {
-                    stars[i].techboomcnt += 1;
-                    GameObject.Find("Canvas/Message1").GetComponent<Text>().text = (i + 1).ToString() + "号文明发生第" + stars[i].techboomcnt.ToString() + "次技术爆炸";
-                }
+                if (stars[i].techboomcnt < global.techboommax)
+                    if (rd.Next() % global.techboom_probability == 0)
+                    {
+                        stars[i].techboomcnt += 1;
+                        GameObject.Find("Canvas/Message1").GetComponent<Text>().text = (i + 1).ToString() + "号文明发生第" + stars[i].techboomcnt.ToString() + "次技术爆炸";
+                    }
             }
 
             if (stars[i].isout)//飞船计算代码
@@ -193,27 +199,29 @@ public class Calculate : MonoBehaviour
                     }
             GC.Collect();
             for (int i = 0; i < stars.Count; i++)
-                if (temp[i].life){
+                if (temp[i].life)
+                {
                     switch (temp[i].type)
                     {
-                        case 1: { GameObject.Find("Canvas/ScoreBoard").GetComponent<Text>().text +="<color=#FF0000>"; break; }
-                        case -1: { GameObject.Find("Canvas/ScoreBoard").GetComponent<Text>().text +="<color=#00FF00>"; break; }
-                        case 0: { GameObject.Find("Canvas/ScoreBoard").GetComponent<Text>().text +="<color=#FFFF00>"; break; }
+                        case 1: { GameObject.Find("Canvas/ScoreBoard").GetComponent<Text>().text += "<color=#FF0000>"; break; }
+                        case -1: { GameObject.Find("Canvas/ScoreBoard").GetComponent<Text>().text += "<color=#00FF00>"; break; }
+                        case 0: { GameObject.Find("Canvas/ScoreBoard").GetComponent<Text>().text += "<color=#FFFF00>"; break; }
                     }
                     GameObject.Find("Canvas/ScoreBoard").GetComponent<Text>().text += temp[i].num.ToString() + "号文明得分：" + temp[i].score.ToString()
                         + ",文明类型:" + (temp[i].isout ? "外向型" : "内向型") + "</color>\n";
                 }
-                    
+
             GC.Collect();
         }
         else
             for (int i = 0; i < stars.Count; i++)
-                if (stars[i].life){
+                if (stars[i].life)
+                {
                     switch (stars[i].type)
                     {
-                        case 1: { GameObject.Find("Canvas/ScoreBoard").GetComponent<Text>().text +="<color=#FF0000>"; break; }
-                        case -1: { GameObject.Find("Canvas/ScoreBoard").GetComponent<Text>().text +="<color=#00FF00>"; break; }
-                        case 0: { GameObject.Find("Canvas/ScoreBoard").GetComponent<Text>().text +="<color=#FFFF00>"; break; }
+                        case 1: { GameObject.Find("Canvas/ScoreBoard").GetComponent<Text>().text += "<color=#FF0000>"; break; }
+                        case -1: { GameObject.Find("Canvas/ScoreBoard").GetComponent<Text>().text += "<color=#00FF00>"; break; }
+                        case 0: { GameObject.Find("Canvas/ScoreBoard").GetComponent<Text>().text += "<color=#FFFF00>"; break; }
                     }
                     GameObject.Find("Canvas/ScoreBoard").GetComponent<Text>().text += stars[i].num.ToString() + "号文明得分：" + stars[i].score.ToString()
                         + ",文明类型:" + (stars[i].isout ? "外向型" : "内向型") + "</color>\n";
