@@ -14,15 +14,12 @@ public class Calculate : MonoBehaviour
             execute = false;
             Debug.LogError("生成概率出错，无法执行程序");
         }
-
         for (int i = 0; i < global.startcnt; i++)
-        {
             spawnstar();
-        }
     }
     public bool execute = true;
     int time = 0;
-    List<Stars> stars = new List<Stars>();
+    List<Stars> stars = new List<Stars>(); int deathcnt = 0;
     System.Random rd = new System.Random();
     void spawnstar()
     {
@@ -53,8 +50,7 @@ public class Calculate : MonoBehaviour
     {
         if (!execute) return;
 
-        GameObject.Find("Canvas/ScoreBoard").GetComponent<Text>().text="";
-
+        GameObject.Find("Canvas/ScoreBoard").GetComponent<Text>().text = "";
         time += 1;//加一年
         GameObject.Find("Canvas/Time").GetComponent<Text>().text = time.ToString() + "年";
 
@@ -67,7 +63,7 @@ public class Calculate : MonoBehaviour
 
         for (int i = 0; i < stars.Count; i++)
         {
-            if (!stars[i].life) continue;
+            if (!stars[i].life) continue;//死亡判断
             if (stars[i].score < 0)
             {
                 stars[i].life = false;
@@ -77,11 +73,21 @@ public class Calculate : MonoBehaviour
                 }
                 GameObject.Find("Canvas/Message1").GetComponent<Text>().text = i.ToString() + "号文明被消灭，存活了" + (time - stars[i].lifetime).ToString() + "年";
                 Destroy(GameObject.Find("Stars/Star" + i.ToString()).GetComponent<Transform>().gameObject);
+                deathcnt += 1;
                 continue;
             }
 
-            stars[i].score += global.develop + stars[i].helpcnt * global.cooperation;
-            if (stars[i].isout)
+            stars[i].score += global.develop + stars[i].helpcnt * global.cooperation + stars[i].techboomcnt * global.techboommax;//加分
+            if (global.allowtechboom)//技术爆炸代码
+            {
+                if (rd.Next() % global.techboom_probability == 0)
+                {
+                    stars[i].techboomcnt+=1;
+                    GameObject.Find("Canvas/Message1").GetComponent<Text>().text = i.ToString() + "号文明发生第" + stars[i].techboomcnt.ToString() + "次技术爆炸";
+                }
+            }
+
+            if (stars[i].isout)//飞船计算代码
             {
                 if (stars[i].havetarget)
                 {
@@ -93,11 +99,7 @@ public class Calculate : MonoBehaviour
                     }
                     else if (stars[i].ship.stats == 0)//飞行状态
                     {
-                        try
-                        {
-                            GameObject.Find("Stars/Star" + i.ToString() + "/Ship").GetComponent<Transform>().position += stars[i].ship.direction;
-                        }
-                        catch { }
+                        GameObject.Find("Stars/Star" + i.ToString() + "/Ship").GetComponent<Transform>().position += stars[i].ship.direction;
                         stars[i].ship.distance += global.travel_speed;
                         if (stars[i].ship.distance >= stars[i].ship.total)//到达目的地
                             stars[i].ship.stats = 1;
@@ -134,7 +136,7 @@ public class Calculate : MonoBehaviour
                 else//新建飞船实体
                 {
                     if (stars.Count == 1) continue;//欸，人呢？
-                    if(stars[i].score<global.cooldowntime) continue;//发展不足，同志仍需努力(～￣▽￣)～
+                    if (stars[i].score < global.cooldowntime) continue;//发展不足，同志仍需努力(～￣▽￣)～
 
                     int target = rd.Next() % stars.Count;
                     Ships ship = new Ships(i, target, stars[i].score / global.defensetimes, stars[i], stars[target]);
@@ -160,10 +162,13 @@ public class Calculate : MonoBehaviour
                 }
             }
         }
-        for(int i=0;i<stars.Count;i++){
-            if(stars[i].life)
-                GameObject.Find("Canvas/ScoreBoard").GetComponent<Text>().text+=i.ToString()+"号文明得分："+stars[i].score.ToString()
-                    +",文明类型:"+(stars[i].isout?"外向型":"内向型")+"\n";
+
+        GameObject.Find("Canvas/ScoreBoard").GetComponent<Text>().text = "文明总数：" + (stars.Count - deathcnt).ToString() + "\n";
+        for (int i = 0; i < stars.Count; i++)
+        {
+            if (stars[i].life)
+                GameObject.Find("Canvas/ScoreBoard").GetComponent<Text>().text += i.ToString() + "号文明得分：" + stars[i].score.ToString()
+                    + ",文明类型:" + (stars[i].isout ? "外向型" : "内向型") + "\n";
         }
     }
 }

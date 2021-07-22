@@ -15,6 +15,7 @@ class Stars
         this.havetarget = false;
         this.helpcnt = 0;
         this.helplist = new List<int>();
+        this.techboomcnt = 0;
 
         if (this.type == 1) this.isout = true;//攻击性文明默认外向
     }
@@ -28,4 +29,5 @@ class Stars
     public Ships ship;//舰队，当havetarget属性为false时此值为null
     public int helpcnt;//帮助这个文明的文明个数，当type的值为1时此值恒为0
     public List<int> helplist;//帮助的其他文明，当type的值为1时此数组的项数恒为0
+    public int techboomcnt;//技术爆炸次数
 }
