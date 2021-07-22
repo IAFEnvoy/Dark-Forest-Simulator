@@ -1,6 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
 public class KeyBoardControl : MonoBehaviour
 {
@@ -8,5 +6,10 @@ public class KeyBoardControl : MonoBehaviour
     void Update()
     {
         if (Input.GetKeyDown(KeyCode.Escape)) UnityEngine.Application.Quit();
+        if (Input.GetKeyDown(KeyCode.Space))
+        {
+            Calculate.execute = !Calculate.execute;
+            Calculate.infinity = !Calculate.infinity;
+        }
     }
 }

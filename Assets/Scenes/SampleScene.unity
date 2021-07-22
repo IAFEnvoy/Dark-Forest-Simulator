@@ -1029,7 +1029,6 @@ MonoBehaviour:
   redl: {fileID: 2100000, guid: 25b08dd7f079c9b41b948109a576589c, type: 2}
   yellowl: {fileID: 2100000, guid: 6085c39b640d4094db27408e0c34c49b, type: 2}
   greenl: {fileID: 2100000, guid: 86a8e2f3b21b9354da65f27c35264c0d, type: 2}
-  execute: 1
 --- !u!4 &1406918799
 Transform:
   m_ObjectHideFlags: 0

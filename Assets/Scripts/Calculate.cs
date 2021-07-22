@@ -18,10 +18,23 @@ public class Calculate : MonoBehaviour
         for (int i = 0; i < global.startcnt; i++)
             spawnstar();
     }
-    public bool execute = true;
+    public static bool execute = true;
     int time = 0;
-    List<Stars> stars = new List<Stars>(); int deathcnt = 0;
+    static List<Stars> stars = new List<Stars>(); int deathcnt = 0;
     System.Random rd = new System.Random();
+
+    public static bool infinity=false;
+    // public static void changelifetime(bool infinity)
+    // {
+    //     if (infinity)
+    //         for (int i = 0; i < stars.Count; i++)
+    //             if (stars[i].life && stars[i].havetarget)
+    //                 GameObject.Find("Stars/Star" + i.ToString() + "/Ship").GetComponent<TrailRenderer>().time = 1000000000;
+    //     if (!infinity)
+    //         for (int j = 0; j < stars.Count; j++)
+    //             if (stars[j].life && stars[j].havetarget)
+    //                 GameObject.Find("Stars/Star" + j.ToString() + "/Ship").GetComponent<TrailRenderer>().time = 1;
+    // }
     void spawnstar()
     {
         int num = rd.Next() % 100, asd;
@@ -49,7 +62,19 @@ public class Calculate : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (!execute) return;
+        if (!execute)
+        {
+            for (int i = 0; i < stars.Count; i++)
+                if (stars[i].life && stars[i].havetarget)
+                    GameObject.Find("Stars/Star" + i.ToString() + "/Ship").GetComponent<TrailRenderer>().time += Time.deltaTime;
+            return;
+        }
+
+        for (int j = 0; j < stars.Count; j++)
+            if (stars[j].life && stars[j].havetarget)
+                if (GameObject.Find("Stars/Star" + j.ToString() + "/Ship").GetComponent<TrailRenderer>().time > 1)
+                    GameObject.Find("Stars/Star" + j.ToString() + "/Ship").GetComponent<TrailRenderer>().time -= Time.deltaTime;
+                else GameObject.Find("Stars/Star" + j.ToString() + "/Ship").GetComponent<TrailRenderer>().time = 1;
 
         GameObject.Find("Canvas/ScoreBoard").GetComponent<Text>().text = "";
         time += 1;//加一年
@@ -83,7 +108,7 @@ public class Calculate : MonoBehaviour
             {
                 if (rd.Next() % global.techboom_probability == 0)
                 {
-                    stars[i].techboomcnt+=1;
+                    stars[i].techboomcnt += 1;
                     GameObject.Find("Canvas/Message1").GetComponent<Text>().text = i.ToString() + "号文明发生第" + stars[i].techboomcnt.ToString() + "次技术爆炸";
                 }
             }
@@ -164,8 +189,8 @@ public class Calculate : MonoBehaviour
             }
         }
 
-        GameObject.Find("Canvas/ScoreBoard").GetComponent<Text>().text = "文明总数：" + (stars.Count - deathcnt).ToString() 
-            +"，fps:"+ Math.Round(1.0 / Time.deltaTime).ToString() + "\n";
+        GameObject.Find("Canvas/ScoreBoard").GetComponent<Text>().text = "文明总数：" + (stars.Count - deathcnt).ToString()
+            + "，fps:" + Math.Round(1.0 / Time.deltaTime).ToString() + "\n";
         for (int i = 0; i < stars.Count; i++)
         {
             if (stars[i].life)
