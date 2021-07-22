@@ -95,7 +95,7 @@ public class Calculate : MonoBehaviour
                 continue;
             }
 
-            stars[i].score += global.develop + stars[i].helpcnt * global.cooperation + stars[i].techboomcnt * global.techboommax;//加分
+            stars[i].score += global.develop + stars[i].helpcnt * global.cooperation + stars[i].techboomcnt * global.techboom_addon;//加分
             if (global.allowtechboom)//技术爆炸代码
             {
                 if (stars[i].techboomcnt < global.techboommax)
@@ -105,7 +105,6 @@ public class Calculate : MonoBehaviour
                         GameObject.Find("Canvas/Message1").GetComponent<Text>().text = (i + 1).ToString() + "号文明发生第" + stars[i].techboomcnt.ToString() + "次技术爆炸";
                     }
             }
-
             if (stars[i].isout)//飞船计算代码
             {
                 if (stars[i].havetarget)
