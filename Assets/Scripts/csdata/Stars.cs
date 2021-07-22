@@ -2,8 +2,9 @@
 
 class Stars
 {
-    public Stars(float x, float y, float z, int type, bool isout, int lifetime)
+    public Stars(int num, float x, float y, float z, int type, bool isout, int lifetime)
     {
+        this.num = num;
         this.x = x;
         this.y = y;
         this.z = z;
@@ -19,6 +20,7 @@ class Stars
 
         if (this.type == 1) this.isout = true;//攻击性文明默认外向
     }
+    public int num;
     public float x, y, z;//三维坐标
     public int score;//得分
     public bool life;//是否存活，score为0时自动归为false

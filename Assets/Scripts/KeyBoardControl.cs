@@ -9,7 +9,10 @@ public class KeyBoardControl : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.Space))
         {
             Calculate.execute = !Calculate.execute;
-            Calculate.infinity = !Calculate.infinity;
+        }
+        if (Input.GetKeyDown(KeyCode.S))
+        {
+            Calculate.sortscore = !Calculate.sortscore;
         }
     }
 }
