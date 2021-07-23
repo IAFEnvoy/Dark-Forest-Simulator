@@ -191,6 +191,36 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 40886643}
   m_CullTransparentMesh: 0
+--- !u!1 &137942032
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 137942033}
+  m_Layer: 0
+  m_Name: Biaxial_foil
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &137942033
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 137942032}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 245.56659, y: 199.52206, z: 116.59308}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 2
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &155575045
 GameObject:
   m_ObjectHideFlags: 0
@@ -447,7 +477,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 5
+  m_RootOrder: 6
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &192737743
 GameObject:
@@ -850,7 +880,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   mewidth: 0
-  meheight: 0
+  meheight: 60
 --- !u!114 &798682305
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1034,7 +1064,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   mewidth: 0
-  meheight: 40
+  meheight: 100
 --- !u!114 &1080044840
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1272,7 +1302,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 3
+  m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1248391293
 GameObject:
@@ -1602,6 +1632,7 @@ MonoBehaviour:
   red: {fileID: 2100000, guid: 089a23c75d35c8342be3a31ed65c988f, type: 2}
   yellow: {fileID: 2100000, guid: 770c622094159974fa7ab14a6b459bee, type: 2}
   green: {fileID: 2100000, guid: dd1f8ce678552a7458384164d11d6e25, type: 2}
+  white: {fileID: 2100000, guid: 1b7e5c70d8c9dee45a85834827737931, type: 2}
   redl: {fileID: 2100000, guid: 0f5d602980e9ed94eb404624f7fce2ee, type: 2}
   yellowl: {fileID: 2100000, guid: 9a2a547cd29d4ac40ae2175a1074af54, type: 2}
   greenl: {fileID: 2100000, guid: 2351f8c4d5d91d54e901da5ce056c25c, type: 2}
@@ -1809,7 +1840,7 @@ RectTransform:
   - {fileID: 240495311}
   - {fileID: 1033928238}
   m_Father: {fileID: 0}
-  m_RootOrder: 2
+  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
@@ -2119,5 +2150,5 @@ Transform:
   - {fileID: 586213668}
   - {fileID: 1278866354}
   m_Father: {fileID: 0}
-  m_RootOrder: 4
+  m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}

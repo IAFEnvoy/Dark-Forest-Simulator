@@ -59,6 +59,7 @@
      <Compile Include="Assets\Scripts\ButtonMethods\Resume.cs" />
      <Compile Include="Assets\Scripts\Calculate.cs" />
      <Compile Include="Assets\Scripts\camera_move.cs" />
+     <Compile Include="Assets\Scripts\csdata\Biaxial_foil.cs" />
      <Compile Include="Assets\Scripts\csdata\global.cs" />
      <Compile Include="Assets\Scripts\csdata\Ship.cs" />
      <Compile Include="Assets\Scripts\csdata\Stars.cs" />

@@ -17,8 +17,8 @@
     public static int techboommax = 5;//最大允许技术爆炸次数
     public static int techboom_addon = 5;//每进行一次技术爆炸发展速度的加成
     public static int techboom_probability = 10000;//技术爆炸概率，填1000则每一次Update有1/1000的概率发生技术爆炸
-    public static bool allow2d=true;//是否允许二维化
-    public static int score2d=100000;//二维化所需要的科技水平（得分）
-    public static double speed2d=travel_speed*2.5;//二向箔速度
-    public static int scoreescape=cooldowntime;//躲避二维化所需的得分
+    public static bool allow2d = true;//是否允许二维化
+    public static int score2d = 500000;//二维化所需要的科技水平（得分）
+    public static double speed2d = travel_speed * 4;//二向箔飞行速度
+    public static int cooldown2d = 1000;//二向箔使用冷却
 }

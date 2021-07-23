@@ -17,6 +17,7 @@ class Stars
         this.helpcnt = 0;
         this.helplist = new List<int>();
         this.techboomcnt = 0;
+        this.time2d = global.cooldown2d;
 
         if (this.type == 1) this.isout = true;//攻击性文明默认外向
     }
@@ -32,4 +33,5 @@ class Stars
     public int helpcnt;//帮助这个文明的文明个数，当type的值为1时此值恒为0
     public List<int> helplist;//帮助的其他文明，当type的值为1时此数组的项数恒为0
     public int techboomcnt;//技术爆炸次数
+    public int time2d;//上一次使用二向箔时间
 }
