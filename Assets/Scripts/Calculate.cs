@@ -249,8 +249,13 @@ public class Calculate : MonoBehaviour
                         {
                             Destroy(GameObject.Find("Stars/Star" + i.ToString() + "/Ship").GetComponent<Transform>().gameObject);
                             stars[i].havetarget = false;
-                            stars[i].helplist.Add(stars[i].ship.target);
-                            stars[stars[i].ship.target].helpcnt += 1;
+                            bool flag=false;
+                            for(int j=0;j<stars[i].helplist.Count;j++)
+                                if(stars[i].helplist[j]==stars[i].ship.target) flag=true;
+                            if(!flag){
+                                stars[i].helplist.Add(stars[i].ship.target);
+                                stars[stars[i].ship.target].helpcnt += 1;
+                            }
                         }
                         else if (stars[i].ship.type == 1)//打起来了。。。
                         {
