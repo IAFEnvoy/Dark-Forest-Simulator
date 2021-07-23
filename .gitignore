@@ -367,7 +367,4 @@ FodyWeavers.xsd
 
 #Output Folder
 /Output
-.VSCodeCounter/2021-07-22_11-04-25/details.md
-.VSCodeCounter/2021-07-22_11-04-25/results.csv
-.VSCodeCounter/2021-07-22_11-04-25/results.md
-.VSCodeCounter/2021-07-22_11-04-25/results.txt
+/.VSCodeCounter

@@ -6,7 +6,7 @@ using UnityEngine.UI;
 
 public class Calculate : MonoBehaviour
 {
-    public Material red, yellow, green, white;
+    public Material red, yellow, green, white, blue;
     public Material redl, yellowl, greenl;
     // Start is called before the first frame update
     void Start()
@@ -57,6 +57,14 @@ public class Calculate : MonoBehaviour
             global.peace = int.Parse(sr.ReadLine());
             global.middle = int.Parse(sr.ReadLine());
             global.attacks = int.Parse(sr.ReadLine());
+            global.allowtechboom = bool.Parse(sr.ReadLine());
+            global.techboommax = int.Parse(sr.ReadLine());
+            global.techboom_addon = int.Parse(sr.ReadLine());
+            global.techboom_probability = int.Parse(sr.ReadLine());
+            global.allow2d = bool.Parse(sr.ReadLine());
+            global.score2d = int.Parse(sr.ReadLine());
+            global.speed2d = double.Parse(sr.ReadLine());
+            global.cooldown2d = int.Parse(sr.ReadLine());
             sr.Close();
             GameObject.Find("Canvas/Message1").GetComponent<Text>().text = "自定义参数读取成功！";
         }
@@ -104,6 +112,9 @@ public class Calculate : MonoBehaviour
             case -1: { star.AddComponent<HighLightControlGreen>(); star.GetComponent<Renderer>().material = green; break; }
             case 0: { star.AddComponent<HighLightControlYellow>(); star.GetComponent<Renderer>().material = yellow; break; }
         }
+        star.AddComponent<TrailRenderer>();
+        star.GetComponent<TrailRenderer>().time = 2;
+        star.GetComponent<TrailRenderer>().material = blue;
         star.transform.parent = GameObject.Find("Stars").GetComponent<Transform>();
     }
     bool checkhelplist(List<int> helplist, int number)
@@ -154,19 +165,25 @@ public class Calculate : MonoBehaviour
             {
                 bfs[i].life = false;
                 Destroy(GameObject.Find("Biaxial_foil/bf" + i.ToString()).GetComponent<Transform>().gameObject);
-                if (stars[bfs[i].target].helpcnt > 0)//欸，我溜了（当有文明帮助）
+                if (stars[bfs[i].target].helpcnt > 0 && stars[bfs[i].target].type != 1)//欸，我溜了（当有文明帮助）
                 {
-                    // stars[bfs[i].target].x = (float)((rd.NextDouble() - 0.5) * 2 * global.rangex);
-                    // stars[bfs[i].target].y = (float)((rd.NextDouble() - 0.5) * 2 * global.rangey);
-                    // stars[bfs[i].target].z = (float)((rd.NextDouble() - 0.5) * 2 * global.rangez);
-                    // GameObject.Find("Stars/Star" + i.ToString()).GetComponent<Transform>().position
-                    //     = new Vector3(stars[bfs[i].target].x, stars[bfs[i].target].y, stars[bfs[i].target].z);
+                    stars[bfs[i].target].x = (float)((rd.NextDouble() - 0.5) * 2 * global.rangex);
+                    stars[bfs[i].target].y = (float)((rd.NextDouble() - 0.5) * 2 * global.rangey);
+                    stars[bfs[i].target].z = (float)((rd.NextDouble() - 0.5) * 2 * global.rangez);
+                    GameObject.Find("Stars/Star" + bfs[i].target.ToString()).GetComponent<Transform>().position
+                        = new Vector3(stars[bfs[i].target].x, stars[bfs[i].target].y, stars[bfs[i].target].z);
+                    if (stars[bfs[i].target].havetarget)
+                    {
+                        stars[bfs[i].target].havetarget = false;
+                        Destroy(GameObject.Find("Stars/Star" + bfs[i].target.ToString() + "/Ship").GetComponent<Transform>().gameObject);
+                    }
+                    GameObject.Find("Canvas/Message1").GetComponent<Text>().text = bfs[i].target.ToString()+"受到降维打击，已经迁移位置";
                 }
                 else//awsl
                 {
                     stars[bfs[i].target].life = false;
 
-                    GameObject.Find("Canvas/Message1").GetComponent<Text>().text = (bfs[i].target + 1).ToString() + "号文明被消灭，存活了" + (time - stars[bfs[i].target].lifetime).ToString() + "年";
+                    GameObject.Find("Canvas/Message1").GetComponent<Text>().text = (bfs[i].target + 1).ToString() + "号文明受到降维打击，存活了" + (time - stars[bfs[i].target].lifetime).ToString() + "年";
                     Destroy(GameObject.Find("Stars/Star" + bfs[i].target.ToString()).GetComponent<Transform>().gameObject);
                     deathcnt += 1;
                 }
@@ -218,19 +235,24 @@ public class Calculate : MonoBehaviour
                     }
                     else
                     {
-                        if (stars[i].ship.type == -1)//没有效果，直接返回
+                        if (stars[i].ship.targetv.x != stars[stars[i].ship.target].x || stars[i].ship.targetv.y != stars[stars[i].ship.target].y || stars[i].ship.targetv.z != stars[stars[i].ship.target].z)
                         {
                             Destroy(GameObject.Find("Stars/Star" + i.ToString() + "/Ship").GetComponent<Transform>().gameObject);
                             stars[i].havetarget = false;
                         }
-                        if (stars[i].ship.type == 0)//加入合作列表
+                        else if (stars[i].ship.type == -1)//没有效果，直接返回
+                        {
+                            Destroy(GameObject.Find("Stars/Star" + i.ToString() + "/Ship").GetComponent<Transform>().gameObject);
+                            stars[i].havetarget = false;
+                        }
+                        else if (stars[i].ship.type == 0)//加入合作列表
                         {
                             Destroy(GameObject.Find("Stars/Star" + i.ToString() + "/Ship").GetComponent<Transform>().gameObject);
                             stars[i].havetarget = false;
                             stars[i].helplist.Add(stars[i].ship.target);
                             stars[stars[i].ship.target].helpcnt += 1;
                         }
-                        if (stars[i].ship.type == 1)//打起来了。。。
+                        else if (stars[i].ship.type == 1)//打起来了。。。
                         {
                             if (stars[i].ship.defense <= 0)
                             {
@@ -253,9 +275,9 @@ public class Calculate : MonoBehaviour
                     int target = rd.Next() % stars.Count;
 
                     if (global.allow2d && stars[i].score >= global.score2d)
-                        if (stars[target].score > stars[i].score && isattack(i, target) &&time-stars[i].time2d >= global.cooldown2d)//二向箔，条件：目标文明得分大于发出者得分
+                        if (stars[target].score > stars[i].score && isattack(i, target) && time - stars[i].time2d >= global.cooldown2d)//二向箔，条件：目标文明得分大于发出者得分
                         {
-                            stars[i].time2d=time;
+                            stars[i].time2d = time;
 
                             Biaxial_foil bf = new Biaxial_foil(bfs.Count, i, target, stars[i], stars[target]);
                             bfs.Add(bf);
@@ -265,10 +287,12 @@ public class Calculate : MonoBehaviour
                             _bf.name = "bf" + (bfs.Count - 1).ToString();
                             _bf.transform.localScale = new Vector3(2, 2, 2);
                             _bf.AddComponent<TrailRenderer>();
-                            _bf.GetComponent<TrailRenderer>().time = 0.25F;
+                            _bf.GetComponent<TrailRenderer>().time = 1;
                             _bf.GetComponent<TrailRenderer>().material = white;
                             _bf.GetComponent<Renderer>().material = white;
                             _bf.transform.parent = GameObject.Find("Biaxial_foil").GetComponent<Transform>();
+
+                            GameObject.Find("Canvas/Message2").GetComponent<Text>().text = (i + 1).ToString() + "号文明发出二向箔，目标" + (target + 1).ToString() + "号文明";
                             continue;
                         }
 

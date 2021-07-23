@@ -112,6 +112,100 @@ NavMeshSettings:
     debug:
       m_Flags: 0
   m_NavMeshData: {fileID: 0}
+--- !u!1 &36254824
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 36254825}
+  - component: {fileID: 36254828}
+  - component: {fileID: 36254827}
+  - component: {fileID: 36254826}
+  m_Layer: 5
+  m_Name: Message2
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &36254825
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 36254824}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 1840375608}
+  m_RootOrder: 3
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchoredPosition: {x: -445, y: -184.5}
+  m_SizeDelta: {x: 500, y: 60}
+  m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &36254826
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 36254824}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 06457efa2373f6f4eac74210d57dcb32, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  mewidth: 0
+  meheight: 60
+--- !u!114 &36254827
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 36254824}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 708705254, guid: f70555f144d8491a825f0804e09c671c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Material: {fileID: 0}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_RaycastTarget: 1
+  m_OnCullStateChanged:
+    m_PersistentCalls:
+      m_Calls: []
+    m_TypeName: UnityEngine.UI.MaskableGraphic+CullStateChangedEvent, UnityEngine.UI,
+      Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
+  m_FontData:
+    m_Font: {fileID: 10102, guid: 0000000000000000e000000000000000, type: 0}
+    m_FontSize: 20
+    m_FontStyle: 0
+    m_BestFit: 0
+    m_MinSize: 2
+    m_MaxSize: 40
+    m_Alignment: 0
+    m_AlignByGeometry: 0
+    m_RichText: 1
+    m_HorizontalOverflow: 0
+    m_VerticalOverflow: 0
+    m_LineSpacing: 1
+  m_Text: "\u521D\u59CB\u5316\u5B8C\u6BD5"
+--- !u!222 &36254828
+CanvasRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 36254824}
+  m_CullTransparentMesh: 0
 --- !u!1 &40886643
 GameObject:
   m_ObjectHideFlags: 0
@@ -579,7 +673,7 @@ RectTransform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 1840375608}
-  m_RootOrder: 3
+  m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
@@ -880,7 +974,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   mewidth: 0
-  meheight: 60
+  meheight: 100
 --- !u!114 &798682305
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -957,7 +1051,7 @@ RectTransform:
   - {fileID: 1094567791}
   - {fileID: 1967714945}
   m_Father: {fileID: 1840375608}
-  m_RootOrder: 4
+  m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
@@ -1064,7 +1158,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   mewidth: 0
-  meheight: 100
+  meheight: 140
 --- !u!114 &1080044840
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1633,6 +1727,7 @@ MonoBehaviour:
   yellow: {fileID: 2100000, guid: 770c622094159974fa7ab14a6b459bee, type: 2}
   green: {fileID: 2100000, guid: dd1f8ce678552a7458384164d11d6e25, type: 2}
   white: {fileID: 2100000, guid: 1b7e5c70d8c9dee45a85834827737931, type: 2}
+  blue: {fileID: 2100000, guid: f3f68bed7bff70945ad6554ac4a0e92c, type: 2}
   redl: {fileID: 2100000, guid: 0f5d602980e9ed94eb404624f7fce2ee, type: 2}
   yellowl: {fileID: 2100000, guid: 9a2a547cd29d4ac40ae2175a1074af54, type: 2}
   greenl: {fileID: 2100000, guid: 2351f8c4d5d91d54e901da5ce056c25c, type: 2}
@@ -1837,6 +1932,7 @@ RectTransform:
   - {fileID: 1589303375}
   - {fileID: 1080044838}
   - {fileID: 798682303}
+  - {fileID: 36254825}
   - {fileID: 240495311}
   - {fileID: 1033928238}
   m_Father: {fileID: 0}

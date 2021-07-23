@@ -27,6 +27,8 @@ class Ships
 
         float asd = (float)(total / global.travel_speed);
         this.direction = new Vector3((targetstar.x - startstar.x) / asd, (targetstar.y - startstar.y) / asd, (targetstar.z - startstar.z) / asd);
+
+        this.targetv=new Vector3(targetstar.x, targetstar.y, targetstar.z);
     }
     public int start;//母星的下标
     public int target;//目标恒星的下标
@@ -35,5 +37,6 @@ class Ships
     public double defense;//舰队强度，当发展速度所减的值等于此值时舰队会返回
     public int type;//0为合作，1为攻击，-1则不会产生任何事情
     public Vector3 direction;//单位方向向量
+    public Vector3 targetv;//目标星坐标（用来防止二向箔导致的瞬移）
 }
 
