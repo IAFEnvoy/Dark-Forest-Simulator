@@ -5,6 +5,7 @@ class Stars
     public Stars(int num, float x, float y, float z, int type, bool isout, int lifetime)
     {
         this.num = num;
+        this.scorelast = 0;
         this.x = x;
         this.y = y;
         this.z = z;
@@ -21,7 +22,8 @@ class Stars
 
         if (this.type == 1) this.isout = true;//攻击性文明默认外向
     }
-    public int num;
+    public int num;//仅供数组索引使用
+    public int scorelast;//上一轮得分，仅供计分板计算使用
     public float x, y, z;//三维坐标
     public int score;//得分
     public bool life;//是否存活，score为0时自动归为false

@@ -177,7 +177,7 @@ public class Calculate : MonoBehaviour
                         stars[bfs[i].target].havetarget = false;
                         Destroy(GameObject.Find("Stars/Star" + bfs[i].target.ToString() + "/Ship").GetComponent<Transform>().gameObject);
                     }
-                    GameObject.Find("Canvas/Message1").GetComponent<Text>().text = bfs[i].target.ToString()+"受到降维打击，已经迁移位置";
+                    GameObject.Find("Canvas/Message1").GetComponent<Text>().text = bfs[i].target.ToString() + "受到降维打击，已经迁移位置";
                 }
                 else//awsl
                 {
@@ -193,6 +193,8 @@ public class Calculate : MonoBehaviour
         for (int i = 0; i < stars.Count; i++)
         {
             if (!stars[i].life) continue;//死亡判断
+            stars[i].scorelast = stars[i].score;
+
             if (stars[i].score < 0)
             {
                 stars[i].life = false;
@@ -249,10 +251,11 @@ public class Calculate : MonoBehaviour
                         {
                             Destroy(GameObject.Find("Stars/Star" + i.ToString() + "/Ship").GetComponent<Transform>().gameObject);
                             stars[i].havetarget = false;
-                            bool flag=false;
-                            for(int j=0;j<stars[i].helplist.Count;j++)
-                                if(stars[i].helplist[j]==stars[i].ship.target) flag=true;
-                            if(!flag){
+                            bool flag = false;
+                            for (int j = 0; j < stars[i].helplist.Count; j++)
+                                if (stars[i].helplist[j] == stars[i].ship.target) flag = true;
+                            if (!flag)
+                            {
                                 stars[i].helplist.Add(stars[i].ship.target);
                                 stars[stars[i].ship.target].helpcnt += 1;
                             }
@@ -350,7 +353,7 @@ public class Calculate : MonoBehaviour
                         case -1: { GameObject.Find("Canvas/ScoreBoard").GetComponent<Text>().text += "<color=#00FF00>"; break; }
                         case 0: { GameObject.Find("Canvas/ScoreBoard").GetComponent<Text>().text += "<color=#FFFF00>"; break; }
                     }
-                    GameObject.Find("Canvas/ScoreBoard").GetComponent<Text>().text += temp[i].num.ToString() + "号文明得分：" + temp[i].score.ToString()
+                    GameObject.Find("Canvas/ScoreBoard").GetComponent<Text>().text += (temp[i].score > temp[i].scorelast ? "↑" : "↓") + temp[i].num.ToString() + "号文明得分：" + temp[i].score.ToString()
                         + ",文明类型:" + (temp[i].isout ? "外向型" : "内向型") + "</color>\n";
                 }
 
@@ -366,7 +369,7 @@ public class Calculate : MonoBehaviour
                         case -1: { GameObject.Find("Canvas/ScoreBoard").GetComponent<Text>().text += "<color=#00FF00>"; break; }
                         case 0: { GameObject.Find("Canvas/ScoreBoard").GetComponent<Text>().text += "<color=#FFFF00>"; break; }
                     }
-                    GameObject.Find("Canvas/ScoreBoard").GetComponent<Text>().text += stars[i].num.ToString() + "号文明得分：" + stars[i].score.ToString()
+                    GameObject.Find("Canvas/ScoreBoard").GetComponent<Text>().text += (stars[i].score > stars[i].scorelast ? "↑" : "↓") + stars[i].num.ToString() + "号文明得分：" + stars[i].score.ToString()
                         + ",文明类型:" + (stars[i].isout ? "外向型" : "内向型") + "</color>\n";
                 }
     }
