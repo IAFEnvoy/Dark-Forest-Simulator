@@ -9,7 +9,7 @@
     <ProductVersion>10.0.20506</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
     <RootNamespace></RootNamespace>
-    <ProjectGuid>{581C8907-65C1-C46C-3A02-5E0C57C5EC9F}</ProjectGuid>
+    <ProjectGuid>{F5DA2707-BADF-E5AA-F5B9-B6F0DDA3E368}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <AssemblyName>Assembly-CSharp</AssemblyName>
@@ -69,19 +69,19 @@
      <Compile Include="Assets\Scripts\TopLeftCorner.cs" />
      <Compile Include="Assets\Scripts\TopRightCorner.cs" />
  <Reference Include="Unity.TextMeshPro.Editor">
- <HintPath>E:/unity/Dark-Forest-Stimulator/Dark-Forest-Stimulator/Library/ScriptAssemblies/Unity.TextMeshPro.Editor.dll</HintPath>
+ <HintPath>E:/unity/Dark-Forest-Simulator/Dark-Forest-Simulator/Library/ScriptAssemblies/Unity.TextMeshPro.Editor.dll</HintPath>
  </Reference>
  <Reference Include="Unity.PackageManagerUI.Editor">
- <HintPath>E:/unity/Dark-Forest-Stimulator/Dark-Forest-Stimulator/Library/ScriptAssemblies/Unity.PackageManagerUI.Editor.dll</HintPath>
+ <HintPath>E:/unity/Dark-Forest-Simulator/Dark-Forest-Simulator/Library/ScriptAssemblies/Unity.PackageManagerUI.Editor.dll</HintPath>
  </Reference>
  <Reference Include="Unity.CollabProxy.Editor">
- <HintPath>E:/unity/Dark-Forest-Stimulator/Dark-Forest-Stimulator/Library/ScriptAssemblies/Unity.CollabProxy.Editor.dll</HintPath>
+ <HintPath>E:/unity/Dark-Forest-Simulator/Dark-Forest-Simulator/Library/ScriptAssemblies/Unity.CollabProxy.Editor.dll</HintPath>
  </Reference>
  <Reference Include="Unity.TextMeshPro">
- <HintPath>E:/unity/Dark-Forest-Stimulator/Dark-Forest-Stimulator/Library/ScriptAssemblies/Unity.TextMeshPro.dll</HintPath>
+ <HintPath>E:/unity/Dark-Forest-Simulator/Dark-Forest-Simulator/Library/ScriptAssemblies/Unity.TextMeshPro.dll</HintPath>
  </Reference>
  <Reference Include="Unity.Analytics.DataPrivacy">
- <HintPath>E:/unity/Dark-Forest-Stimulator/Dark-Forest-Stimulator/Library/ScriptAssemblies/Unity.Analytics.DataPrivacy.dll</HintPath>
+ <HintPath>E:/unity/Dark-Forest-Simulator/Dark-Forest-Simulator/Library/ScriptAssemblies/Unity.Analytics.DataPrivacy.dll</HintPath>
  </Reference>
  <Reference Include="UnityEngine.AIModule">
  <HintPath>D:/Program Files/Unity2/Editor/Data/Managed/UnityEngine/UnityEngine.AIModule.dll</HintPath>
@@ -285,13 +285,13 @@
  <HintPath>D:/Program Files/Unity2/Editor/Data/UnityExtensions/Unity/UnitySpatialTracking/RuntimeEditor/UnityEngine.SpatialTracking.dll</HintPath>
  </Reference>
  <Reference Include="Unity.Analytics.Editor">
- <HintPath>E:/unity/Dark-Forest-Stimulator/Dark-Forest-Stimulator/Library/PackageCache/com.unity.analytics@3.2.2/Unity.Analytics.Editor.dll</HintPath>
+ <HintPath>E:/unity/Dark-Forest-Simulator/Dark-Forest-Simulator/Library/PackageCache/com.unity.analytics@3.2.2/Unity.Analytics.Editor.dll</HintPath>
  </Reference>
  <Reference Include="Unity.Analytics.StandardEvents">
- <HintPath>E:/unity/Dark-Forest-Stimulator/Dark-Forest-Stimulator/Library/PackageCache/com.unity.analytics@3.2.2/Unity.Analytics.StandardEvents.dll</HintPath>
+ <HintPath>E:/unity/Dark-Forest-Simulator/Dark-Forest-Simulator/Library/PackageCache/com.unity.analytics@3.2.2/Unity.Analytics.StandardEvents.dll</HintPath>
  </Reference>
  <Reference Include="Unity.Analytics.Tracker">
- <HintPath>E:/unity/Dark-Forest-Stimulator/Dark-Forest-Stimulator/Library/PackageCache/com.unity.analytics@3.2.2/Unity.Analytics.Tracker.dll</HintPath>
+ <HintPath>E:/unity/Dark-Forest-Simulator/Dark-Forest-Simulator/Library/PackageCache/com.unity.analytics@3.2.2/Unity.Analytics.Tracker.dll</HintPath>
  </Reference>
  <Reference Include="netstandard">
  <HintPath>D:/Program Files/Unity2/Editor/Data/NetStandard/ref/2.0.0/netstandard.dll</HintPath>
@@ -641,7 +641,7 @@
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="Assembly-CSharp-firstpass.csproj">
-      <Project>{D991997D-0D7A-04BE-1593-BB03C954E404}</Project>      <Name>Assembly-CSharp-firstpass</Name>    </ProjectReference>
+      <Project>{1656AC5C-F415-0215-0781-217697EC1E4F}</Project>      <Name>Assembly-CSharp-firstpass</Name>    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
