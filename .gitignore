@@ -366,7 +366,7 @@ FodyWeavers.xsd
 /ProjectSettings
 
 #Output Folder
-/Outputs
+/Output
 .VSCodeCounter/2021-07-22_11-04-25/details.md
 .VSCodeCounter/2021-07-22_11-04-25/results.csv
 .VSCodeCounter/2021-07-22_11-04-25/results.md
