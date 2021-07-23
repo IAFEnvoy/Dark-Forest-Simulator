@@ -10,7 +10,10 @@ public class Restart : MonoBehaviour
     }
     void Click()
     {
-        Calculate.reload=true;
-        KeyBoardControl.escapeclick = true;
+        if (KeyBoardControl.show)
+        {
+            Calculate.reload = true;
+            KeyBoardControl.close = true;
+        }
     }
 }

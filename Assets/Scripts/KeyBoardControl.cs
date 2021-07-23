@@ -8,32 +8,34 @@ public class KeyBoardControl : MonoBehaviour
         GameObject.Find("Canvas/Menu").GetComponent<CanvasGroup>().alpha = 0;
     }
     // Update is called once per frame
-    public static bool escapeclick = false;
     public static bool show = false;
+    public static bool open = false, close = false;
     void Update()
     {
-        if (escapeclick)
+        if (open)
         {
-            if (show)
+            GameObject.Find("Canvas/Menu").GetComponent<CanvasGroup>().alpha += Time.deltaTime * 3;
+            if (GameObject.Find("Canvas/Menu").GetComponent<CanvasGroup>().alpha >= 1)
             {
-                GameObject.Find("Canvas/Menu").GetComponent<CanvasGroup>().alpha -= Time.deltaTime * 3;
-                if (GameObject.Find("Canvas/Menu").GetComponent<CanvasGroup>().alpha <= 0)
-                {
-                    GameObject.Find("Canvas/Menu").GetComponent<CanvasGroup>().alpha = 0;
-                    show = false; escapeclick = false;
-                }
+                GameObject.Find("Canvas/Menu").GetComponent<CanvasGroup>().alpha = 1;
+                show = true; open = false;
             }
-            else
+
+        }
+        if (close)
+        {
+            GameObject.Find("Canvas/Menu").GetComponent<CanvasGroup>().alpha -= Time.deltaTime * 3;
+            if (GameObject.Find("Canvas/Menu").GetComponent<CanvasGroup>().alpha <= 0)
             {
-                GameObject.Find("Canvas/Menu").GetComponent<CanvasGroup>().alpha += Time.deltaTime * 3;
-                if (GameObject.Find("Canvas/Menu").GetComponent<CanvasGroup>().alpha >= 1)
-                {
-                    GameObject.Find("Canvas/Menu").GetComponent<CanvasGroup>().alpha = 1;
-                    show = true; escapeclick = false;
-                }
+                GameObject.Find("Canvas/Menu").GetComponent<CanvasGroup>().alpha = 0;
+                show = false; close=false;
             }
         }
-        if (Input.GetKeyDown(KeyCode.Escape)) escapeclick = true;
+        if (Input.GetKeyDown(KeyCode.Escape))
+        {
+            if (show == true) close = true;
+            else open = true;
+        }
         if (Input.GetKeyDown(KeyCode.Space))
         {
             Calculate.execute = !Calculate.execute;

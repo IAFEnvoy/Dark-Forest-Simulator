@@ -10,6 +10,7 @@ public class Exit : MonoBehaviour
     }
     void Click()
     {
-        UnityEngine.Application.Quit();
+        if (KeyBoardControl.show)
+            UnityEngine.Application.Quit();
     }
 }

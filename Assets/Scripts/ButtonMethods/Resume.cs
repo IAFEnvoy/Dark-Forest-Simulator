@@ -10,6 +10,7 @@ public class Resume : MonoBehaviour
     }
     void Click()
     {
-        KeyBoardControl.escapeclick = true;
+        if (KeyBoardControl.show)
+            KeyBoardControl.close = true;
     }
 }
