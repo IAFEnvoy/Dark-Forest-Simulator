@@ -1,5 +1,7 @@
 ﻿using System.Collections.Generic;
+using System;
 
+[Serializable]
 class Stars
 {
     public Stars(int num, float x, float y, float z, int type, bool isout, int lifetime)
