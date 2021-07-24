@@ -3,7 +3,7 @@
     public static int startcnt = 0;//初始文明数量
     public static int startscore = 0;//初始得分
     public static double travel_speed = 1.5;//旅行速度
-    public static int develop = 10;//发展速度
+    public static int develop = 20;//发展速度
     public static int cooperation = 5;//合作的时候额外的发展速度
     public static int attack = -30;//战争的时候额外的发展速度
                                    //（通常设置为小于-develop的数，当然你也可以设置为正的。。。）
@@ -21,4 +21,5 @@
     public static int score2d = 50000;//二维化所需要的科技水平（得分）
     public static double speed2d = 6;//二向箔飞行速度
     public static int cooldown2d = 1000;//二向箔使用冷却
+    public static bool allow_attack_help = true;//是否允许攻击型文明接受和平型文明的帮助
 }

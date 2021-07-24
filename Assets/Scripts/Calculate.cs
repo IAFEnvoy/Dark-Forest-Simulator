@@ -65,6 +65,7 @@ public class Calculate : MonoBehaviour
             global.score2d = int.Parse(sr.ReadLine());
             global.speed2d = double.Parse(sr.ReadLine());
             global.cooldown2d = int.Parse(sr.ReadLine());
+            global.allow_attack_help = bool.Parse(sr.ReadLine());
             sr.Close();
             GameObject.Find("Canvas/Message1").GetComponent<Text>().text = "自定义参数读取成功！";
         }
@@ -81,7 +82,7 @@ public class Calculate : MonoBehaviour
         if (stars[start].type == 1) return true;
         if (stars[start].type == -1)
         {
-            if (stars[target].type == 1) return true;
+            if (stars[target].type == 1) if(global.allow_attack_help) return false; else return true;
             return false;
         }
         if (stars[start].type == 0)
@@ -282,8 +283,8 @@ public class Calculate : MonoBehaviour
 
                     int target = rd.Next() % stars.Count;
 
-                    if (global.allow2d && stars[i].score >= global.score2d)
-                        if (stars[target].score > stars[i].score && isattack(i, target) && time - stars[i].time2d >= global.cooldown2d)//二向箔，条件：目标文明得分大于发出者得分
+                    if (global.allow2d && stars[i].score >= global.score2d)//二向箔启用判断
+                        if (stars[target].score > stars[i].score && isattack(i, target) && time - stars[i].time2d >= global.cooldown2d / 2)//二向箔，条件：目标文明得分大于发出者得分一半
                         {
                             stars[i].time2d = time;
 

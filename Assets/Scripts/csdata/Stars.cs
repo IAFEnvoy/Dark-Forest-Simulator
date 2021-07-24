@@ -32,7 +32,7 @@ class Stars
     public int lifetime;//出生时间，用于在打印信息时计算用
     public bool havetarget;//是否有飞船发出（一次只能发出一艘）,isout属性为false时此值恒为false
     public Ships ship;//舰队，当havetarget属性为false时此值为null
-    public int helpcnt;//帮助这个文明的文明个数，当type的值为1时此值恒为0
+    public int helpcnt;//帮助这个文明的文明个数
     public List<int> helplist;//帮助的其他文明，当type的值为1时此数组的项数恒为0
     public int techboomcnt;//技术爆炸次数
     public int time2d;//上一次使用二向箔时间
