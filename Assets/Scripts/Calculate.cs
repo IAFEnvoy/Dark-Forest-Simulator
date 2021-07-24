@@ -20,14 +20,14 @@ public class Calculate : MonoBehaviour
     public static void savefile(string path)
     {
         StreamWriter sw = new StreamWriter(path);
-        sw.Write(Encoding.UTF8.GetString(Binary.SerializeBinary(new Datas(stars, bfs))));
+        sw.WriteLine(Encoding.ASCII.GetString(Binary.SerializeBinary(new Datas(stars, bfs))));
         sw.Close();
         sw.Dispose();
     }
     public static void loadfile(string path)
     {
         StreamReader sr = new StreamReader(path);
-        Datas datas = (Datas)Binary.DeserializeBinary(Encoding.UTF8.GetBytes(sr.ReadToEnd()));
+        Datas datas = (Datas)Binary.DeserializeBinary(Encoding.ASCII.GetBytes(sr.ReadToEnd()));
 
         time = 0;
         ReadGlobal();
@@ -41,8 +41,7 @@ public class Calculate : MonoBehaviour
                 Destroy(GameObject.Find("Biaxial_foil/bf" + i.ToString()).GetComponent<Transform>().gameObject);
         bfs.Clear();
 
-        stars=datas.stars;
-        bfs=datas.bfs;
+        stars = datas.stars;
 
         for (int i = 0; i < stars.Count; i++)
             if (stars[i].life)
@@ -52,6 +51,9 @@ public class Calculate : MonoBehaviour
                 star.name = "Star" + i.ToString();
                 star.transform.localScale = new Vector3(5, 5, 5);
                 star.AddComponent<HighlightableObject>();
+
+                if(stars[i].type!=1&&stars[i].type!=0) stars[i].type=-1;
+
                 switch (stars[i].type)
                 {
                     case 1: { star.AddComponent<HighLightControlRed>(); star.GetComponent<Renderer>().material = reds; break; }
@@ -63,36 +65,24 @@ public class Calculate : MonoBehaviour
                 star.GetComponent<TrailRenderer>().material = blues;
                 star.transform.parent = GameObject.Find("Stars").GetComponent<Transform>();
 
-                if(stars[i].havetarget){
-                    GameObject _ship = GameObject.CreatePrimitive(PrimitiveType.Sphere);
-                    _ship.transform.position = new Vector3(stars[i].ship.nowx, stars[i].ship.nowy, stars[i].ship.nowz);
-                    _ship.name = "Ship";
-                    _ship.transform.localScale = new Vector3(2, 2, 2);
-                    _ship.AddComponent<TrailRenderer>();
-                    _ship.GetComponent<TrailRenderer>().time = 1;
-                    switch (stars[i].ship.type)
-                    {
-                        case 1: { _ship.GetComponent<Renderer>().material = reds; _ship.GetComponent<TrailRenderer>().material = redls; break; }
-                        case -1: { _ship.GetComponent<Renderer>().material = yellows; _ship.GetComponent<TrailRenderer>().material = yellowls; break; }
-                        case 0: { _ship.GetComponent<Renderer>().material = greens; _ship.GetComponent<TrailRenderer>().material = greenls; break; }
-                    }
-                    _ship.transform.parent = GameObject.Find("Stars/Star" + i.ToString()).GetComponent<Transform>();
-                }
+                stars[i].havetarget = false;stars[i].ship=null;
+                // if (stars[i].havetarget)
+                // {
+                //     GameObject _ship = GameObject.CreatePrimitive(PrimitiveType.Sphere);
+                //     _ship.transform.position = new Vector3(stars[i].ship.nowx, stars[i].ship.nowy, stars[i].ship.nowz);
+                //     _ship.name = "Ship";
+                //     _ship.transform.localScale = new Vector3(2, 2, 2);
+                //     _ship.AddComponent<TrailRenderer>();
+                //     _ship.GetComponent<TrailRenderer>().time = 1;
+                //     switch (stars[i].ship.type)
+                //     {
+                //         case 1: { _ship.GetComponent<Renderer>().material = reds; _ship.GetComponent<TrailRenderer>().material = redls; break; }
+                //         case -1: { _ship.GetComponent<Renderer>().material = yellows; _ship.GetComponent<TrailRenderer>().material = yellowls; break; }
+                //         case 0: { _ship.GetComponent<Renderer>().material = greens; _ship.GetComponent<TrailRenderer>().material = greenls; break; }
+                //     }
+                //     _ship.transform.parent = GameObject.Find("Stars/Star" + i.ToString()).GetComponent<Transform>();
+                // }
             }
-        stars.Clear(); deathcnt = 0;
-        for (int i = 0; i < bfs.Count; i++)
-            if (bfs[i].life){
-                GameObject _bf = GameObject.CreatePrimitive(PrimitiveType.Sphere);
-                _bf.transform.position = new Vector3(bfs[i].nowx, bfs[i].nowy, bfs[i].nowz);
-                _bf.name = "bf" + i.ToString();
-                _bf.transform.localScale = new Vector3(2, 2, 2);
-                _bf.AddComponent<TrailRenderer>();
-                _bf.GetComponent<TrailRenderer>().time = 1;
-                _bf.GetComponent<TrailRenderer>().material = whites;
-                _bf.GetComponent<Renderer>().material = whites;
-                _bf.transform.parent = GameObject.Find("Biaxial_foil").GetComponent<Transform>();
-            }
-        bfs.Clear();
     }
     // Start is called before the first frame update
     void Start()
@@ -212,19 +202,19 @@ public class Calculate : MonoBehaviour
     void Update()
     {
         if (reload) { reload = false; Load(); }
-        if (!execute)
-        {
-            for (int i = 0; i < stars.Count; i++)
-                if (stars[i].life && stars[i].havetarget)
-                    GameObject.Find("Stars/Star" + i.ToString() + "/Ship").GetComponent<TrailRenderer>().time += Time.deltaTime;
-            return;
-        }
+        // if (!execute)
+        // {
+        //     for (int i = 0; i < stars.Count; i++)
+        //         if (stars[i].life && stars[i].havetarget)
+        //             GameObject.Find("Stars/Star" + i.ToString() + "/Ship").GetComponent<TrailRenderer>().time += Time.deltaTime;
+        //     return;
+        // }
 
-        for (int j = 0; j < stars.Count; j++)
-            if (stars[j].life && stars[j].havetarget)
-                if (GameObject.Find("Stars/Star" + j.ToString() + "/Ship").GetComponent<TrailRenderer>().time > 1)
-                    GameObject.Find("Stars/Star" + j.ToString() + "/Ship").GetComponent<TrailRenderer>().time -= Time.deltaTime;
-                else GameObject.Find("Stars/Star" + j.ToString() + "/Ship").GetComponent<TrailRenderer>().time = 1;
+        // for (int j = 0; j < stars.Count; j++)
+        //     if (stars[j].life && stars[j].havetarget)
+        //         if (GameObject.Find("Stars/Star" + j.ToString() + "/Ship").GetComponent<TrailRenderer>().time > 1)
+        //             GameObject.Find("Stars/Star" + j.ToString() + "/Ship").GetComponent<TrailRenderer>().time -= Time.deltaTime;
+        //         else GameObject.Find("Stars/Star" + j.ToString() + "/Ship").GetComponent<TrailRenderer>().time = 1;
 
         GameObject.Find("Canvas/ScoreBoard").GetComponent<Text>().text = "";
         time += 1;//加一年
@@ -246,9 +236,9 @@ public class Calculate : MonoBehaviour
             }
             GameObject.Find("Biaxial_foil/bf" + i.ToString()).GetComponent<Transform>().position += new Vector3(bfs[i].directionx, bfs[i].directiony, bfs[i].directionz);
             bfs[i].distance += global.speed2d;
-            bfs[i].nowx+=bfs[i].directionx;
-            bfs[i].nowy+=bfs[i].directiony;
-            bfs[i].nowz+=bfs[i].directionz;
+            bfs[i].nowx += bfs[i].directionx;
+            bfs[i].nowy += bfs[i].directiony;
+            bfs[i].nowz += bfs[i].directionz;
 
             if (bfs[i].distance >= bfs[i].total)//到达目的地
             {
@@ -311,8 +301,9 @@ public class Calculate : MonoBehaviour
             {
                 if (stars[i].havetarget)//飞船计算代码
                 {
+                    if(GameObject.Find("Stars/Star" + i.ToString() + "/Ship")==null){}//DO NOTHING
                     //execute ships
-                    if (!stars[stars[i].ship.target].life)//判断目标是否死亡
+                    else if (!stars[stars[i].ship.target].life)//判断目标是否死亡
                     {
                         Destroy(GameObject.Find("Stars/Star" + i.ToString() + "/Ship").GetComponent<Transform>().gameObject);
                         stars[i].havetarget = false;
@@ -444,6 +435,7 @@ public class Calculate : MonoBehaviour
                         case 1: { GameObject.Find("Canvas/ScoreBoard").GetComponent<Text>().text += "<color=#FF0000>"; break; }
                         case -1: { GameObject.Find("Canvas/ScoreBoard").GetComponent<Text>().text += "<color=#00FF00>"; break; }
                         case 0: { GameObject.Find("Canvas/ScoreBoard").GetComponent<Text>().text += "<color=#FFFF00>"; break; }
+                        default: { GameObject.Find("Canvas/ScoreBoard").GetComponent<Text>().text += "<color=#FFFFFF>"; break;}
                     }
                     GameObject.Find("Canvas/ScoreBoard").GetComponent<Text>().text += (temp[i].score > temp[i].scorelast ? "↑" : "↓") + temp[i].num.ToString() + "号文明得分：" + temp[i].score.ToString()
                         + ",文明类型:" + (temp[i].isout ? "外向型" : "内向型") + "</color>\n";
@@ -460,6 +452,7 @@ public class Calculate : MonoBehaviour
                         case 1: { GameObject.Find("Canvas/ScoreBoard").GetComponent<Text>().text += "<color=#FF0000>"; break; }
                         case -1: { GameObject.Find("Canvas/ScoreBoard").GetComponent<Text>().text += "<color=#00FF00>"; break; }
                         case 0: { GameObject.Find("Canvas/ScoreBoard").GetComponent<Text>().text += "<color=#FFFF00>"; break; }
+                        default: { GameObject.Find("Canvas/ScoreBoard").GetComponent<Text>().text += "<color=#FFFFFF>"; break;}
                     }
                     GameObject.Find("Canvas/ScoreBoard").GetComponent<Text>().text += (stars[i].score > stars[i].scorelast ? "↑" : "↓") + stars[i].num.ToString() + "号文明得分：" + stars[i].score.ToString()
                         + ",文明类型:" + (stars[i].isout ? "外向型" : "内向型") + "</color>\n";

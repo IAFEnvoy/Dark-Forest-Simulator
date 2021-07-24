@@ -3,10 +3,6 @@ using System;
 [Serializable]
 class Biaxial_foil//二向箔
 {
-    public Biaxial_foil()
-    {
-
-    }
     public Biaxial_foil(int num, int start, int target, Stars startstar, Stars targetstar)
     {
         this.num = num;
