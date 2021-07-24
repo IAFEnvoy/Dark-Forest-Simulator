@@ -13,6 +13,8 @@ public class Load : MonoBehaviour
     {
         if (!KeyBoardControl.show) return;
         
+        KeyBoardControl.close = true;
+        
         OpenFileName openFileName = new OpenFileName();
         openFileName.structSize = Marshal.SizeOf(openFileName);
         openFileName.filter = "*.dfs\0*.dfs";

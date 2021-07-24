@@ -66,22 +66,22 @@ public class Calculate : MonoBehaviour
                 star.transform.parent = GameObject.Find("Stars").GetComponent<Transform>();
 
                 stars[i].havetarget = false;stars[i].ship=null;
-                // if (stars[i].havetarget)
-                // {
-                //     GameObject _ship = GameObject.CreatePrimitive(PrimitiveType.Sphere);
-                //     _ship.transform.position = new Vector3(stars[i].ship.nowx, stars[i].ship.nowy, stars[i].ship.nowz);
-                //     _ship.name = "Ship";
-                //     _ship.transform.localScale = new Vector3(2, 2, 2);
-                //     _ship.AddComponent<TrailRenderer>();
-                //     _ship.GetComponent<TrailRenderer>().time = 1;
-                //     switch (stars[i].ship.type)
-                //     {
-                //         case 1: { _ship.GetComponent<Renderer>().material = reds; _ship.GetComponent<TrailRenderer>().material = redls; break; }
-                //         case -1: { _ship.GetComponent<Renderer>().material = yellows; _ship.GetComponent<TrailRenderer>().material = yellowls; break; }
-                //         case 0: { _ship.GetComponent<Renderer>().material = greens; _ship.GetComponent<TrailRenderer>().material = greenls; break; }
-                //     }
-                //     _ship.transform.parent = GameObject.Find("Stars/Star" + i.ToString()).GetComponent<Transform>();
-                // }
+                if (stars[i].havetarget)
+                {
+                    GameObject _ship = GameObject.CreatePrimitive(PrimitiveType.Sphere);
+                    _ship.transform.position = new Vector3(stars[i].ship.nowx, stars[i].ship.nowy, stars[i].ship.nowz);
+                    _ship.name = "Ship";
+                    _ship.transform.localScale = new Vector3(2, 2, 2);
+                    _ship.AddComponent<TrailRenderer>();
+                    _ship.GetComponent<TrailRenderer>().time = 1;
+                    switch (stars[i].ship.type)
+                    {
+                        case 1: { _ship.GetComponent<Renderer>().material = reds; _ship.GetComponent<TrailRenderer>().material = redls; break; }
+                        case -1: { _ship.GetComponent<Renderer>().material = yellows; _ship.GetComponent<TrailRenderer>().material = yellowls; break; }
+                        case 0: { _ship.GetComponent<Renderer>().material = greens; _ship.GetComponent<TrailRenderer>().material = greenls; break; }
+                    }
+                    _ship.transform.parent = GameObject.Find("Stars/Star" + i.ToString()).GetComponent<Transform>();
+                }
             }
     }
     // Start is called before the first frame update

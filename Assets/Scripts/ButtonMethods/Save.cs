@@ -12,6 +12,8 @@ public class Save : MonoBehaviour
     void Click()
     {
         if (!KeyBoardControl.show) return;
+
+        KeyBoardControl.close = true;
         
         OpenFileName openFileName = new OpenFileName();
         openFileName.structSize = Marshal.SizeOf(openFileName);
