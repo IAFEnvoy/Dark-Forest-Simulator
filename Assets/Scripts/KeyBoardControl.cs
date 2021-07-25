@@ -31,7 +31,7 @@ public class KeyBoardControl : MonoBehaviour
             if (GameObject.Find("Canvas/Menu").GetComponent<CanvasGroup>().alpha <= 0)
             {
                 GameObject.Find("Canvas/Menu").GetComponent<CanvasGroup>().alpha = 0;
-                show = false; close=false;
+                show = false; close = false;
             }
         }
         if (Input.GetKeyDown(KeyCode.Escape))
@@ -49,8 +49,8 @@ public class KeyBoardControl : MonoBehaviour
         }
         if (Input.GetKeyDown(KeyCode.F2))//截屏系统
         {
-            Rect r=new Rect(0,0,Screen.width,Screen.height);
-            Camera came=GameObject.Find("Main Camera").GetComponent<Camera>();
+            Rect r = new Rect(0, 0, Screen.width, Screen.height);
+            Camera came = GameObject.Find("Main Camera").GetComponent<Camera>();
             RenderTexture rt = new RenderTexture((int)r.width, (int)r.height, 0);
 
             came.targetTexture = rt;
@@ -78,8 +78,12 @@ public class KeyBoardControl : MonoBehaviour
             if (LocalDialog.GetSaveFileName(openFileName))
             {
                 if (openFileName.file.Contains(".png") == false) openFileName.file += ".png";
-                File.WriteAllBytes(openFileName.file,bytes);
+                File.WriteAllBytes(openFileName.file, bytes);
             }
+        }
+        if (Input.GetKeyDown(KeyCode.H))
+        {
+            GameObject.Find("Canvas/UI").GetComponent<CanvasGroup>().alpha = 1 - GameObject.Find("Canvas/UI").GetComponent<CanvasGroup>().alpha;
         }
     }
 }
