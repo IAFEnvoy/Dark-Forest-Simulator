@@ -100,7 +100,6 @@ public class Calculate : MonoBehaviour
     public void Load()
     {
         time = 0;
-        ReadGlobal();
         GameObject.Find("Canvas/UI/Message").GetComponent<Text>().text = "初始化完毕";
         for (int i = 0; i < stars.Count; i++)
             if (stars[i].life)
