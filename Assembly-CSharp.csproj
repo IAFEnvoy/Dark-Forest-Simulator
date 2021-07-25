@@ -70,6 +70,7 @@
      <Compile Include="Assets\Scripts\HighLightControls\HighLightControlRed.cs" />
      <Compile Include="Assets\Scripts\HighLightControls\HighLightControlYellow.cs" />
      <Compile Include="Assets\Scripts\KeyBoardControl.cs" />
+     <Compile Include="Assets\Scripts\MusicControl.cs" />
      <Compile Include="Assets\Scripts\Rotate.cs" />
      <Compile Include="Assets\Scripts\System\LocalDialog.cs" />
      <Compile Include="Assets\Scripts\System\OpenFileName.cs" />
