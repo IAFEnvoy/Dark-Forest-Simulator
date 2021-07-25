@@ -261,7 +261,7 @@ public class Calculate : MonoBehaviour
                         stars[bfs[i].target].havetarget = false;
                         Destroy(GameObject.Find("Stars/Star" + bfs[i].target.ToString() + "/Ship").GetComponent<Transform>().gameObject);
                     }
-                    GameObject.Find("Canvas/UI/Message1").GetComponent<Text>().text = bfs[i].target.ToString() + "受到降维打击，已经迁移位置";
+                    GameObject.Find("Canvas/UI/Message1").GetComponent<Text>().text = bfs[i].target.ToString() + "号文明受到降维打击，已经迁移位置";
                 }
                 else//awsl
                 {

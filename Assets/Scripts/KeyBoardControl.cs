@@ -1,5 +1,4 @@
-﻿using System;
-using System.IO;
+﻿using System.IO;
 using System.Runtime.InteropServices;
 using UnityEngine;
 
@@ -9,6 +8,9 @@ public class KeyBoardControl : MonoBehaviour
     void Start()
     {
         GameObject.Find("Canvas/Menu").GetComponent<CanvasGroup>().alpha = 0;
+        GameObject.Find("Canvas/Setting").GetComponent<CanvasGroup>().alpha = 0;
+        GameObject.Find("Canvas/Setting").GetComponent<CanvasGroup>().interactable = false;
+        GameObject.Find("Canvas/Setting").GetComponent<CanvasGroup>().blocksRaycasts = false;
     }
     // Update is called once per frame
     public static bool show = false;
@@ -36,7 +38,8 @@ public class KeyBoardControl : MonoBehaviour
         }
         if (Input.GetKeyDown(KeyCode.Escape))
         {
-            if (show == true) close = true;
+            if (GameObject.Find("Canvas/Setting").GetComponent<CanvasGroup>().alpha == 1) GameObject.Find("Canvas/Setting").GetComponent<CanvasGroup>().alpha = 0;
+            else if (show == true) close = true;
             else open = true;
         }
         if (Input.GetKeyDown(KeyCode.Space))
@@ -84,6 +87,15 @@ public class KeyBoardControl : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.H))
         {
             GameObject.Find("Canvas/UI").GetComponent<CanvasGroup>().alpha = 1 - GameObject.Find("Canvas/UI").GetComponent<CanvasGroup>().alpha;
+        }
+        if (Input.GetKeyDown(KeyCode.V))
+        {
+            if (GameObject.Find("Canvas/Menu").GetComponent<CanvasGroup>().alpha == 0)
+            {
+                GameObject.Find("Canvas/Setting").GetComponent<CanvasGroup>().alpha = 1 - GameObject.Find("Canvas/Setting").GetComponent<CanvasGroup>().alpha;
+                GameObject.Find("Canvas/Setting").GetComponent<CanvasGroup>().interactable = !GameObject.Find("Canvas/Setting").GetComponent<CanvasGroup>().interactable;
+                GameObject.Find("Canvas/Setting").GetComponent<CanvasGroup>().blocksRaycasts = !GameObject.Find("Canvas/Setting").GetComponent<CanvasGroup>().blocksRaycasts;
+            }
         }
     }
 }
