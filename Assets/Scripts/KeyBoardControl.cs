@@ -38,7 +38,12 @@ public class KeyBoardControl : MonoBehaviour
         }
         if (Input.GetKeyDown(KeyCode.Escape))
         {
-            if (GameObject.Find("Canvas/Setting").GetComponent<CanvasGroup>().alpha == 1) GameObject.Find("Canvas/Setting").GetComponent<CanvasGroup>().alpha = 0;
+            if (GameObject.Find("Canvas/Setting").GetComponent<CanvasGroup>().alpha == 1)
+            {
+                GameObject.Find("Canvas/Setting").GetComponent<CanvasGroup>().alpha = 0;
+                GameObject.Find("Canvas/Setting").GetComponent<CanvasGroup>().interactable = !GameObject.Find("Canvas/Setting").GetComponent<CanvasGroup>().interactable;
+                GameObject.Find("Canvas/Setting").GetComponent<CanvasGroup>().blocksRaycasts = !GameObject.Find("Canvas/Setting").GetComponent<CanvasGroup>().blocksRaycasts;
+            }
             else if (show == true) close = true;
             else open = true;
         }
