@@ -53,7 +53,6 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-     <Compile Include="Assets\Scripts\BottomRightCorner.cs" />
      <Compile Include="Assets\Scripts\ButtonMethods\Exit.cs" />
      <Compile Include="Assets\Scripts\ButtonMethods\Load.cs" />
      <Compile Include="Assets\Scripts\ButtonMethods\Restart.cs" />
@@ -67,14 +66,16 @@
      <Compile Include="Assets\Scripts\csdata\global.cs" />
      <Compile Include="Assets\Scripts\csdata\Ship.cs" />
      <Compile Include="Assets\Scripts\csdata\Stars.cs" />
-     <Compile Include="Assets\Scripts\HighLightControlGreen.cs" />
-     <Compile Include="Assets\Scripts\HighLightControlRed.cs" />
-     <Compile Include="Assets\Scripts\HighLightControlYellow.cs" />
+     <Compile Include="Assets\Scripts\HighLightControls\HighLightControlGreen.cs" />
+     <Compile Include="Assets\Scripts\HighLightControls\HighLightControlRed.cs" />
+     <Compile Include="Assets\Scripts\HighLightControls\HighLightControlYellow.cs" />
      <Compile Include="Assets\Scripts\KeyBoardControl.cs" />
+     <Compile Include="Assets\Scripts\Rotate.cs" />
      <Compile Include="Assets\Scripts\System\LocalDialog.cs" />
      <Compile Include="Assets\Scripts\System\OpenFileName.cs" />
-     <Compile Include="Assets\Scripts\TopLeftCorner.cs" />
-     <Compile Include="Assets\Scripts\TopRightCorner.cs" />
+     <Compile Include="Assets\Scripts\TextControl\BottomRightCorner.cs" />
+     <Compile Include="Assets\Scripts\TextControl\TopLeftCorner.cs" />
+     <Compile Include="Assets\Scripts\TextControl\TopRightCorner.cs" />
  <Reference Include="Unity.TextMeshPro.Editor">
  <HintPath>E:/unity/Dark-Forest-Simulator/Dark-Forest-Simulator/Library/ScriptAssemblies/Unity.TextMeshPro.Editor.dll</HintPath>
  </Reference>

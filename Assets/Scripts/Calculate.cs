@@ -176,9 +176,12 @@ public class Calculate : MonoBehaviour
         stars.Add(new Stars(stars.Count + 1, (float)((rd.NextDouble() - 0.5) * 2 * global.rangex), (float)((rd.NextDouble() - 0.5) * 2 * global.rangey),
             (float)((rd.NextDouble() - 0.5) * 2 * global.rangez), asd, rd.Next() % 2 == 1, time));
 
-        GameObject star = GameObject.CreatePrimitive(PrimitiveType.Sphere);
+        GameObject star = GameObject.CreatePrimitive(PrimitiveType.Sphere),starl=GameObject.CreatePrimitive(PrimitiveType.Sphere);
+        starl.transform.position = new Vector3(stars[stars.Count - 1].x, stars[stars.Count - 1].y, stars[stars.Count - 1].z);
         star.transform.position = new Vector3(stars[stars.Count - 1].x, stars[stars.Count - 1].y, stars[stars.Count - 1].z);
-        star.name = "Star" + (stars.Count - 1).ToString();
+        starl.name = "Star" + (stars.Count - 1).ToString();
+        star.name = "Star";
+        starl.transform.localScale = new Vector3(1, 1, 1);
         star.transform.localScale = new Vector3(5, 5, 5);
         star.AddComponent<HighlightableObject>();
         switch (asd)
@@ -187,10 +190,12 @@ public class Calculate : MonoBehaviour
             case -1: { star.AddComponent<HighLightControlGreen>(); star.GetComponent<Renderer>().material = green; break; }
             case 0: { star.AddComponent<HighLightControlYellow>(); star.GetComponent<Renderer>().material = yellow; break; }
         }
-        star.AddComponent<TrailRenderer>();
-        star.GetComponent<TrailRenderer>().time = 2;
-        star.GetComponent<TrailRenderer>().material = blue;
-        star.transform.parent = GameObject.Find("Stars").GetComponent<Transform>();
+        starl.AddComponent<TrailRenderer>();
+        starl.GetComponent<TrailRenderer>().time = 2;
+        starl.GetComponent<TrailRenderer>().material = blue;
+        star.AddComponent<Rotate>();
+        starl.transform.parent = GameObject.Find("Stars").GetComponent<Transform>();
+        star.transform.parent =starl.transform;
     }
     bool checkhelplist(List<int> helplist, int number)
     {
