@@ -24,6 +24,9 @@ public class Accept : MonoBehaviour
         global.rangey = double.Parse(GameObject.Find("Canvas/Setting/rangey/Value").GetComponent<Text>().text);
         global.rangez = double.Parse(GameObject.Find("Canvas/Setting/rangez/Value").GetComponent<Text>().text);
         global.defensetimes = int.Parse(GameObject.Find("Canvas/Setting/defensetimes/Value").GetComponent<Text>().text);
+        global.peace = int.Parse(GameObject.Find("Canvas/Setting/peace/Value").GetComponent<Text>().text);
+        global.middle = int.Parse(GameObject.Find("Canvas/Setting/middle/Value").GetComponent<Text>().text);
+        global.attacks = int.Parse(GameObject.Find("Canvas/Setting/attacks/Value").GetComponent<Text>().text);
         global.allowtechboom = GameObject.Find("Canvas/Setting/allowtechboom/Value").GetComponent<Text>().text == "是" ? true : false;
         global.techboommax = int.Parse(GameObject.Find("Canvas/Setting/techboommax/Value").GetComponent<Text>().text);
         global.techboom_addon = int.Parse(GameObject.Find("Canvas/Setting/techboom_addon/Value").GetComponent<Text>().text);

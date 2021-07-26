@@ -30,7 +30,6 @@ public class Calculate : MonoBehaviour
         Datas datas = (Datas)Binary.DeserializeBinary(Encoding.ASCII.GetBytes(sr.ReadToEnd()));
 
         time = 0;
-        ReadGlobal();
         GameObject.Find("Canvas/UI/Message").GetComponent<Text>().text = "初始化完毕";
         for (int i = 0; i < stars.Count; i++)
             if (stars[i].life)
@@ -90,12 +89,8 @@ public class Calculate : MonoBehaviour
         reds = red; yellows = yellow; greens = green; blues = blue; whites = white;
         redls = redl; yellowls = yellowl; greenls = greenl;
 
-        if (global.peace + global.middle + global.attacks != 100)
-        {
-            execute = false;
-            Debug.LogError("生成概率出错，无法执行程序");
-        }
         Load();
+        ReadGlobal();
     }
     public void Load()
     {
@@ -167,8 +162,8 @@ public class Calculate : MonoBehaviour
     }
     void spawnstar()
     {
-        int num = rd.Next() % 100, asd;
-        if (0 <= num && num < global.peace) asd = -1;
+        int num = rd.Next() % (global.peace + global.middle + global.attacks), asd;
+        if (num < global.peace) asd = -1;
         else if (global.peace <= num && num < global.peace + global.middle) asd = 0;
         else asd = 1;
 

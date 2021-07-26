@@ -12,7 +12,7 @@
     public static int cooldowntime = 500;//需要多少score才能发射飞船
     public static double rangex = 200, rangey = 200, rangez = 200;//生成范围
     public static int defensetimes = 1;//score和舰队强度的比值
-    public static int peace = 10, middle = 10, attacks = 80;//生成概率，和必须为100，否则出错
+    public static int peace = 10, middle = 10, attacks = 80;//生成概率
     public static bool allowtechboom = true;//是否允许技术爆炸
     public static int techboommax = 5;//最大允许技术爆炸次数
     public static int techboom_addon = 5;//每进行一次技术爆炸发展速度的加成
