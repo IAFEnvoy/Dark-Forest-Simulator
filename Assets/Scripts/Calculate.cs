@@ -88,9 +88,7 @@ public class Calculate : MonoBehaviour
     {
         reds = red; yellows = yellow; greens = green; blues = blue; whites = white;
         redls = redl; yellowls = yellowl; greenls = greenl;
-
         Load();
-        ReadGlobal();
     }
     public void Load()
     {
@@ -107,43 +105,6 @@ public class Calculate : MonoBehaviour
 
         for (int i = 0; i < global.startcnt; i++)
             spawnstar();
-    }
-    static void ReadGlobal()
-    {
-        if (File.Exists(Application.dataPath + @"\start_up_parameter.txt"))
-        {
-            GameObject.Find("Canvas/UI/Message1").GetComponent<Text>().text = "自定义参数读取失败，将使用默认值。";
-            StreamReader sr = new StreamReader(Application.dataPath + @"\start_up_parameter.txt");
-            global.startcnt = int.Parse(sr.ReadLine());
-            global.startscore = int.Parse(sr.ReadLine());
-            global.travel_speed = double.Parse(sr.ReadLine());
-            global.develop = int.Parse(sr.ReadLine());
-            global.cooperation = int.Parse(sr.ReadLine());
-            global.attack = int.Parse(sr.ReadLine());
-            global.allowspawn = bool.Parse(sr.ReadLine());
-            global.spawnprobability = int.Parse(sr.ReadLine());
-            global.cooldowntime = int.Parse(sr.ReadLine());
-            global.rangex = double.Parse(sr.ReadLine());
-            global.rangey = double.Parse(sr.ReadLine());
-            global.rangez = double.Parse(sr.ReadLine());
-            global.defensetimes = int.Parse(sr.ReadLine());
-            global.peace = int.Parse(sr.ReadLine());
-            global.middle = int.Parse(sr.ReadLine());
-            global.attacks = int.Parse(sr.ReadLine());
-            global.allowtechboom = bool.Parse(sr.ReadLine());
-            global.techboommax = int.Parse(sr.ReadLine());
-            global.techboom_addon = int.Parse(sr.ReadLine());
-            global.techboom_probability = int.Parse(sr.ReadLine());
-            global.allow2d = bool.Parse(sr.ReadLine());
-            global.score2d = int.Parse(sr.ReadLine());
-            global.speed2d = double.Parse(sr.ReadLine());
-            global.cooldown2d = int.Parse(sr.ReadLine());
-            global.allow_attack_help = bool.Parse(sr.ReadLine());
-            sr.Close();
-            GameObject.Find("Canvas/UI/Message1").GetComponent<Text>().text = "自定义参数读取成功！";
-        }
-        else
-            GameObject.Find("Canvas/UI/Message1").GetComponent<Text>().text = "没有找到自定义参数文件，将使用默认值。";
     }
     bool isattack(int start, int target)
     {
