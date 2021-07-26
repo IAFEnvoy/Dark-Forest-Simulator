@@ -54,7 +54,10 @@
   </ItemGroup>
   <ItemGroup>
      <Compile Include="Assets\Scripts\AndroidMethods\MenuClick.cs" />
+     <Compile Include="Assets\Scripts\AndroidMethods\Sort.cs" />
      <Compile Include="Assets\Scripts\AndroidMethods\ValueClick.cs" />
+     <Compile Include="Assets\Scripts\AndroidMethods\ZoomBig.cs" />
+     <Compile Include="Assets\Scripts\AndroidMethods\ZoomSmall.cs" />
      <Compile Include="Assets\Scripts\ButtonMethods\Exit.cs" />
      <Compile Include="Assets\Scripts\ButtonMethods\Restart.cs" />
      <Compile Include="Assets\Scripts\ButtonMethods\Resume.cs" />

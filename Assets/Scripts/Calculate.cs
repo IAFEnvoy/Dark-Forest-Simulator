@@ -398,7 +398,7 @@ public class Calculate : MonoBehaviour
                         default: { GameObject.Find("Canvas/UI/ScoreBoard").GetComponent<Text>().text += "<color=#FFFFFF>"; break; }
                     }
                     GameObject.Find("Canvas/UI/ScoreBoard").GetComponent<Text>().text += (temp[i].score > temp[i].scorelast ? "↑" : "↓") + temp[i].num.ToString() + "号文明得分：" + temp[i].score.ToString()
-                        + ",文明类型:" + (temp[i].isout ? "外向型" : "内向型") + "</color>\n";
+                        + "</color>\n";
                 }
 
             GC.Collect();
@@ -415,7 +415,7 @@ public class Calculate : MonoBehaviour
                         default: { GameObject.Find("Canvas/UI/ScoreBoard").GetComponent<Text>().text += "<color=#FFFFFF>"; break; }
                     }
                     GameObject.Find("Canvas/UI/ScoreBoard").GetComponent<Text>().text += (stars[i].score > stars[i].scorelast ? "↑" : "↓") + stars[i].num.ToString() + "号文明得分：" + stars[i].score.ToString()
-                        + ",文明类型:" + (stars[i].isout ? "外向型" : "内向型") + "</color>\n";
+                        + "</color>\n";
                 }
     }
 }
