@@ -23,8 +23,7 @@ public class Binary
     {
         MemoryStream memStream = new MemoryStream(buf);
         memStream.Position = 0;
-        System.Runtime.Serialization.Formatters.Binary.BinaryFormatter deserializer =
-            new System.Runtime.Serialization.Formatters.Binary.BinaryFormatter();
+        System.Runtime.Serialization.Formatters.Binary.BinaryFormatter deserializer = new System.Runtime.Serialization.Formatters.Binary.BinaryFormatter();
         object newobj = deserializer.Deserialize(memStream);
         memStream.Close();
         return newobj;
