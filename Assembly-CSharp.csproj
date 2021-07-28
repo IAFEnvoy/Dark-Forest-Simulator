@@ -72,7 +72,7 @@
      <Compile Include="Assets\Scripts\KeyBoardControl.cs" />
      <Compile Include="Assets\Scripts\MusicControl.cs" />
      <Compile Include="Assets\Scripts\Rotate.cs" />
-     <Compile Include="Assets\Scripts\SavingSystem\init.cs" />
+     <Compile Include="Assets\Scripts\SavingSystem\save.cs" />
      <Compile Include="Assets\Scripts\SettingMethods\Accept.cs" />
      <Compile Include="Assets\Scripts\SettingMethods\GetSliderValue.cs" />
      <Compile Include="Assets\Scripts\System\LocalDialog.cs" />
