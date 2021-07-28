@@ -25,7 +25,7 @@ public class camera_move : MonoBehaviour
     void Update()
     {
         if(KeyBoardControl.show) return;
-        if(GameObject.Find("Canvas/Setting").GetComponent<CanvasGroup>().alpha == 1) return;
+        //if(GameObject.Find("Canvas/Setting").GetComponent<CanvasGroup>().alpha == 1) return;
         if (Input.GetMouseButtonDown(0))
         {
             now = Input.mousePosition;

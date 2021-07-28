@@ -7,10 +7,10 @@ public class KeyBoardControl : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        GameObject.Find("Canvas/Menu").GetComponent<CanvasGroup>().alpha = 0;
-        GameObject.Find("Canvas/Setting").GetComponent<CanvasGroup>().alpha = 0;
-        GameObject.Find("Canvas/Setting").GetComponent<CanvasGroup>().interactable = false;
-        GameObject.Find("Canvas/Setting").GetComponent<CanvasGroup>().blocksRaycasts = false;
+        //GameObject.Find("Canvas/Menu").GetComponent<CanvasGroup>().alpha = 0;
+        // GameObject.Find("Canvas/Setting").GetComponent<CanvasGroup>().alpha = 0;
+        // GameObject.Find("Canvas/Setting").GetComponent<CanvasGroup>().interactable = false;
+        // GameObject.Find("Canvas/Setting").GetComponent<CanvasGroup>().blocksRaycasts = false;
     }
     // Update is called once per frame
     public static bool show = false;
