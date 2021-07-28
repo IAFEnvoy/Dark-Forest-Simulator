@@ -47,14 +47,6 @@ public class KeyBoardControl : MonoBehaviour
             else if (show == true) close = true;
             else open = true;
         }
-        if (Input.GetKeyDown(KeyCode.Space))
-        {
-            Calculate.execute = !Calculate.execute;
-        }
-        if (Input.GetKeyDown(KeyCode.S))
-        {
-            Calculate.sortscore = !Calculate.sortscore;
-        }
         if (Input.GetKeyDown(KeyCode.F2))//截屏系统
         {
             Rect r = new Rect(0, 0, Screen.width, Screen.height);
