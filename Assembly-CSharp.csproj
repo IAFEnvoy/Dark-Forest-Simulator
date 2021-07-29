@@ -66,6 +66,8 @@
      <Compile Include="Assets\Scripts\csdata\global.cs" />
      <Compile Include="Assets\Scripts\csdata\Ship.cs" />
      <Compile Include="Assets\Scripts\csdata\Stars.cs" />
+     <Compile Include="Assets\Scripts\Galaxy\EmptyStars.cs" />
+     <Compile Include="Assets\Scripts\Galaxy\SpawnGalaxy.cs" />
      <Compile Include="Assets\Scripts\HighLightControls\HighLightControlGreen.cs" />
      <Compile Include="Assets\Scripts\HighLightControls\HighLightControlRed.cs" />
      <Compile Include="Assets\Scripts\HighLightControls\HighLightControlYellow.cs" />

@@ -103,7 +103,7 @@ public class Calculate : MonoBehaviour
                 Destroy(GameObject.Find("Biaxial_foil/bf" + i.ToString()).GetComponent<Transform>().gameObject);
         bfs.Clear();
 
-        for (int i = 0; i < global.startcnt; i++)
+        for (int i = 0; i < Init.startcnt; i++)
             spawnstar();
     }
     bool isattack(int start, int target)
@@ -111,7 +111,7 @@ public class Calculate : MonoBehaviour
         if (stars[start].type == 1) return true;
         if (stars[start].type == -1)
         {
-            if (stars[target].type == 1) if (global.allow_attack_help) return false; else return true;
+            if (stars[target].type == 1) if (Civil.allow_attack_help) return false; else return true;
             return false;
         }
         if (stars[start].type == 0)
@@ -123,13 +123,13 @@ public class Calculate : MonoBehaviour
     }
     void spawnstar()
     {
-        int num = rd.Next() % (global.peace + global.middle + global.attacks), asd;
-        if (num < global.peace) asd = -1;
-        else if (global.peace <= num && num < global.peace + global.middle) asd = 0;
+        int num = rd.Next() % (SpawnCivil.peace + SpawnCivil.middle + SpawnCivil.attacks), asd;
+        if (num < SpawnCivil.peace) asd = -1;
+        else if (SpawnCivil.peace <= num && num < SpawnCivil.peace + SpawnCivil.middle) asd = 0;
         else asd = 1;
 
-        stars.Add(new Stars(stars.Count + 1, (float)((rd.NextDouble() - 0.5) * 2 * global.rangex), (float)((rd.NextDouble() - 0.5) * 2 * global.rangey),
-            (float)((rd.NextDouble() - 0.5) * 2 * global.rangez), asd, rd.Next() % 2 == 1, time));
+        stars.Add(new Stars(stars.Count + 1, (float)((rd.NextDouble() - 0.5) * 2 * SpawnCivil.rangex), (float)((rd.NextDouble() - 0.5) * 2 * SpawnCivil.rangey),
+            (float)((rd.NextDouble() - 0.5) * 2 * SpawnCivil.rangez), asd, rd.Next() % 2 == 1, time));
 
         GameObject star = GameObject.CreatePrimitive(PrimitiveType.Sphere), starl = GameObject.CreatePrimitive(PrimitiveType.Sphere);
         starl.transform.position = new Vector3(stars[stars.Count - 1].x, stars[stars.Count - 1].y, stars[stars.Count - 1].z);
@@ -181,8 +181,8 @@ public class Calculate : MonoBehaviour
         GameObject.Find("Canvas/UI/Time").GetComponent<Text>().text = time.ToString() + "年";
 
         //生成新文明
-        if (global.allowspawn)
-            if (rd.Next() % global.spawnprobability == 0)
+        if (SpawnCivil.allow)
+            if (rd.Next() % SpawnCivil.probability == 0)
                 spawnstar();
 
         for (int i = 0; i < bfs.Count; i++)//二向箔计算
@@ -195,7 +195,7 @@ public class Calculate : MonoBehaviour
                 continue;
             }
             GameObject.Find("Biaxial_foil/bf" + i.ToString()).GetComponent<Transform>().position += new Vector3(bfs[i].directionx, bfs[i].directiony, bfs[i].directionz);
-            bfs[i].distance += global.speed2d;
+            bfs[i].distance += Attack_2d.speed;
             bfs[i].nowx += bfs[i].directionx;
             bfs[i].nowy += bfs[i].directiony;
             bfs[i].nowz += bfs[i].directionz;
@@ -206,9 +206,9 @@ public class Calculate : MonoBehaviour
                 Destroy(GameObject.Find("Biaxial_foil/bf" + i.ToString()).GetComponent<Transform>().gameObject);
                 if (stars[bfs[i].target].helpcnt > 0 && stars[bfs[i].target].type != 1)//欸，我溜了（当有文明帮助）
                 {
-                    stars[bfs[i].target].x = (float)((rd.NextDouble() - 0.5) * 2 * global.rangex);
-                    stars[bfs[i].target].y = (float)((rd.NextDouble() - 0.5) * 2 * global.rangey);
-                    stars[bfs[i].target].z = (float)((rd.NextDouble() - 0.5) * 2 * global.rangez);
+                    stars[bfs[i].target].x = (float)((rd.NextDouble() - 0.5) * 2 * SpawnCivil.rangex);
+                    stars[bfs[i].target].y = (float)((rd.NextDouble() - 0.5) * 2 * SpawnCivil.rangey);
+                    stars[bfs[i].target].z = (float)((rd.NextDouble() - 0.5) * 2 * SpawnCivil.rangez);
                     GameObject.Find("Stars/Star" + bfs[i].target.ToString()).GetComponent<Transform>().position
                         = new Vector3(stars[bfs[i].target].x, stars[bfs[i].target].y, stars[bfs[i].target].z);
                     if (stars[bfs[i].target].havetarget)
@@ -247,11 +247,11 @@ public class Calculate : MonoBehaviour
                 continue;
             }
 
-            stars[i].score += global.develop + stars[i].helpcnt * global.cooperation + stars[i].techboomcnt * global.techboom_addon;//加分
-            if (global.allowtechboom)//技术爆炸代码
+            stars[i].score += Speed.develop + stars[i].helpcnt * Speed.cooperation + stars[i].techboomcnt * TechBoom.addon;//加分
+            if (TechBoom.allow)//技术爆炸代码
             {
-                if (stars[i].techboomcnt < global.techboommax)
-                    if (rd.Next() % global.techboom_probability == 0)
+                if (stars[i].techboomcnt < TechBoom.max)
+                    if (rd.Next() % TechBoom.probability == 0)
                     {
                         stars[i].techboomcnt += 1;
                         GameObject.Find("Canvas/UI/Message1").GetComponent<Text>().text = (i + 1).ToString() + "号文明发生第" + stars[i].techboomcnt.ToString() + "次技术爆炸";
@@ -274,7 +274,7 @@ public class Calculate : MonoBehaviour
                         stars[i].ship.nowx += stars[i].ship.directionx;
                         stars[i].ship.nowy += stars[i].ship.directiony;
                         stars[i].ship.nowz += stars[i].ship.directionz;
-                        stars[i].ship.distance += global.travel_speed;
+                        stars[i].ship.distance += Speed.travel_speed;
                         if (stars[i].ship.distance >= stars[i].ship.total)//到达目的地
                             stars[i].ship.stats = 1;
                     }
@@ -312,8 +312,8 @@ public class Calculate : MonoBehaviour
                             }
                             else
                             {
-                                stars[stars[i].ship.target].score += global.attack;
-                                stars[i].ship.defense += global.attack;
+                                stars[stars[i].ship.target].score += Speed.attack;
+                                stars[i].ship.defense += Speed.attack;
                             }
                         }
                     }
@@ -321,12 +321,12 @@ public class Calculate : MonoBehaviour
                 else//新建飞船实体
                 {
                     if (stars.Count == 1) continue;//欸，人呢？
-                    if (stars[i].score < global.cooldowntime) continue;//发展不足，同志仍需努力(～￣▽￣)～
+                    if (stars[i].score < Civil.cooldowntime) continue;//发展不足，同志仍需努力(～￣▽￣)～
 
                     int target = rd.Next() % stars.Count;
 
-                    if (global.allow2d && stars[i].score >= global.score2d)//二向箔启用判断
-                        if (stars[target].score > stars[i].score && isattack(i, target) && time - stars[i].time2d >= global.cooldown2d / 2)//二向箔，条件：目标文明得分大于发出者得分一半
+                    if (Attack_2d.allow && stars[i].score >= Attack_2d.score)//二向箔启用判断
+                        if (stars[target].score > stars[i].score && isattack(i, target) && time - stars[i].time2d >= Attack_2d.cooldown / 2)//二向箔，条件：目标文明得分大于发出者得分一半
                         {
                             stars[i].time2d = time;
 
@@ -347,7 +347,7 @@ public class Calculate : MonoBehaviour
                             continue;
                         }
 
-                    Ships ship = new Ships(i, target, stars[i].score / global.defensetimes, stars[i], stars[target]);
+                    Ships ship = new Ships(i, target, stars[i].score / Civil.defensetimes, stars[i], stars[target]);
                     stars[i].havetarget = true;
                     stars[i].ship = ship;
 
