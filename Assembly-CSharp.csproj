@@ -54,7 +54,6 @@
   </ItemGroup>
   <ItemGroup>
      <Compile Include="Assets\Scripts\ButtonMethods\Exit.cs" />
-     <Compile Include="Assets\Scripts\ButtonMethods\Load.cs" />
      <Compile Include="Assets\Scripts\ButtonMethods\Restart.cs" />
      <Compile Include="Assets\Scripts\ButtonMethods\Resume.cs" />
      <Compile Include="Assets\Scripts\ButtonMethods\Save.cs" />
@@ -62,12 +61,12 @@
      <Compile Include="Assets\Scripts\camera_move.cs" />
      <Compile Include="Assets\Scripts\csdata\Biaxial_foil.cs" />
      <Compile Include="Assets\Scripts\csdata\Binary.cs" />
+     <Compile Include="Assets\Scripts\csdata\Civils.cs" />
      <Compile Include="Assets\Scripts\csdata\Datas.cs" />
      <Compile Include="Assets\Scripts\csdata\global.cs" />
+     <Compile Include="Assets\Scripts\csdata\Light_Grain.cs" />
      <Compile Include="Assets\Scripts\csdata\Ship.cs" />
      <Compile Include="Assets\Scripts\csdata\Stars.cs" />
-     <Compile Include="Assets\Scripts\Galaxy\EmptyStars.cs" />
-     <Compile Include="Assets\Scripts\Galaxy\SpawnGalaxy.cs" />
      <Compile Include="Assets\Scripts\HighLightControls\HighLightControlGreen.cs" />
      <Compile Include="Assets\Scripts\HighLightControls\HighLightControlRed.cs" />
      <Compile Include="Assets\Scripts\HighLightControls\HighLightControlYellow.cs" />

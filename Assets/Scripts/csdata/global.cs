@@ -5,8 +5,11 @@
 }
 class Galaxy
 {
-    public static int startcnt = 0;//初始文明数量
+    public static int startcnt = 250;//初始恒星数量
     public static int spawnprobability = 100;//新恒星生成概率
+    public static bool allowspawn = true;//允许新恒星生成
+    public static int size = 300;//星系半径
+    public static int height = 30;//星系高度
 }
 class Speed
 {
@@ -28,6 +31,12 @@ class Civil
     public static int cooldowntime = 500;//需要多少score才能发射飞船
     public static int defensetimes = 1;//score和舰队强度的比值
     public static bool allow_attack_help = true;//是否允许攻击型文明接受和平型文明的帮助
+}
+class Ship
+{
+    public static bool allow = true;//允许发出飞船
+    public static int spawn_probability = 100;//新飞船生成概率
+    public static int max = 10;//最大飞船数量
 }
 class TechBoom
 {
