@@ -98,11 +98,6 @@ public class Calculate : MonoBehaviour
             if (civils[i].home.Count == 0)//死亡
             {
                 civils[i].life = false;
-                foreach (int star in civils[i].home)
-                {
-                    stars[star].life = false;
-                    Destroy(GameObject.Find("Galaxy/Star" + star.ToString()).GetComponent<Transform>().gameObject);
-                }
                 foreach (int it in civils[i].helplist)
                     civils[it].helpcnt -= 1;
                 GameObject.Find("Canvas/UI/Message1").GetComponent<Text>().text = (i + 1).ToString() + "号文明被消灭，存活了" + (time - civils[i].lifetime).ToString() + "年";
@@ -111,7 +106,8 @@ public class Calculate : MonoBehaviour
             }
 
             civils[i].scorelast = 0;
-            foreach(int it in civils[i].home){
+            foreach (int it in civils[i].home)
+            {
                 civils[i].scorelast += stars[it].score;
                 stars[it].score += Speed.develop + civils[i].helpcnt * Speed.cooperation + civils[i].techboomcnt * TechBoom.addon;//加分
             }
@@ -133,12 +129,12 @@ public class Calculate : MonoBehaviour
                     if (!civils[i].ship[j].life) continue;
                     if (!stars[civils[i].ship[j].target].life)//判断目标是否死亡
                     {
-                        Destroy(GameObject.Find("Galaxy/Star" + i.ToString() + "/Ship" + j.ToString()).GetComponent<Transform>().gameObject);
+                        Destroy(GameObject.Find("Galaxy/Star" + civils[i].home[0].ToString() + "/Ship" + j.ToString()).GetComponent<Transform>().gameObject);
                         civils[i].ship[j].life = false;
                     }
                     else if (civils[i].ship[j].stats == 0)//飞行状态
                     {
-                        GameObject.Find("Galaxy/Star" + i.ToString() + "/Ship" + j.ToString()).GetComponent<Transform>().position
+                        GameObject.Find("Galaxy/Star" + civils[i].home[0].ToString() + "/Ship" + j.ToString()).GetComponent<Transform>().position
                             += new Vector3(civils[i].ship[j].directionx, civils[i].ship[j].directiony, civils[i].ship[j].directionz);
                         civils[i].ship[j].nowx += civils[i].ship[j].directionx;
                         civils[i].ship[j].nowy += civils[i].ship[j].directiony;
@@ -151,12 +147,12 @@ public class Calculate : MonoBehaviour
                     {
                         if (civils[i].ship[j].type == -1)//没有效果，直接返回
                         {
-                            Destroy(GameObject.Find("Galaxy/Star" + i.ToString() + "/Ship" + j.ToString()).GetComponent<Transform>().gameObject);
+                            Destroy(GameObject.Find("Galaxy/Star" + civils[i].home[0].ToString() + "/Ship" + j.ToString()).GetComponent<Transform>().gameObject);
                             civils[i].ship[j].life = false;
                         }
                         else if (civils[i].ship[j].type == 0)//加入合作列表
                         {
-                            Destroy(GameObject.Find("Galaxy/Star" + i.ToString() + "/Ship" + j.ToString()).GetComponent<Transform>().gameObject);
+                            Destroy(GameObject.Find("Galaxy/Star" + civils[i].home[0].ToString() + "/Ship" + j.ToString()).GetComponent<Transform>().gameObject);
                             civils[i].ship[j].life = false;
                             bool flag = false;
                             for (int k = 0; k < civils[i].helplist.Count; k++)
@@ -171,7 +167,7 @@ public class Calculate : MonoBehaviour
                         {
                             if (civils[i].ship[j].defense <= 0)
                             {
-                                Destroy(GameObject.Find("Galaxy/Star" + i.ToString() + "/Ship" + j.ToString()).GetComponent<Transform>().gameObject);
+                                Destroy(GameObject.Find("Galaxy/Star" + civils[i].home[0].ToString() + "/Ship" + j.ToString()).GetComponent<Transform>().gameObject);
                                 civils[i].ship[j].life = false;
                             }
                             else
@@ -182,21 +178,24 @@ public class Calculate : MonoBehaviour
                         }
                         else if (civils[i].ship[j].type == 2)//探索
                         {
-                            stars[civils[i].ship[j].target].civil = i;
-                            civils[i].home.Add(civils[i].ship[j].target);
-                            GameObject _star = GameObject.Find("Galaxy/Star" + civils[i].ship[j].target.ToString());
-                            switch (civils[i].type)
+                            if (stars[civils[i].ship[j].target].civil == -1)
                             {
-                                case 1: { _star.AddComponent<HighLightControlRed>(); _star.GetComponent<Renderer>().material = red; break; }
-                                case -1: { _star.AddComponent<HighLightControlGreen>(); _star.GetComponent<Renderer>().material = green; break; }
-                                case 0: { _star.AddComponent<HighLightControlYellow>(); _star.GetComponent<Renderer>().material = yellow; break; }
+                                stars[civils[i].ship[j].target].civil = i;
+                                civils[i].home.Add(civils[i].ship[j].target);
+                                GameObject _star = GameObject.Find("Galaxy/Star" + civils[i].ship[j].target.ToString());
+                                switch (civils[i].type)
+                                {
+                                    case 1: { _star.AddComponent<HighLightControlRed>(); _star.GetComponent<Renderer>().material = red; break; }
+                                    case -1: { _star.AddComponent<HighLightControlGreen>(); _star.GetComponent<Renderer>().material = green; break; }
+                                    case 0: { _star.AddComponent<HighLightControlYellow>(); _star.GetComponent<Renderer>().material = yellow; break; }
+                                }
+                                Destroy(GameObject.Find("Galaxy/Star" + civils[i].home[0].ToString() + "/Ship" + j.ToString()).GetComponent<Transform>().gameObject);
+                                civils[i].ship[j].life = false;
                             }
-                            Destroy(GameObject.Find("Galaxy/Star" + i.ToString() + "/Ship" + j.ToString()).GetComponent<Transform>().gameObject);
-                            civils[i].ship[j].life = false;
                         }
                     }
                 }
-                if (Ship.allow && civils.Count > 1)
+                if (Ship.allow)
                     if (civils[i].ship.Count < Ship.max && rd.Next() % Ship.spawn_probability == 0)//飞船生成
                     {
                         int target = rd.Next() % stars.Count, whilecnt = 0;
@@ -206,11 +205,12 @@ public class Calculate : MonoBehaviour
                             whilecnt++;
                             if (whilecnt > stars.Count) continue;
                         }
+
                         Ships ship = new Ships(i, target, stars[civils[i].home[0]].score / Civil.defensetimes, stars[civils[i].home[0]], stars[target], civils);
                         civils[i].ship.Add(ship);
 
                         GameObject _ship = GameObject.CreatePrimitive(PrimitiveType.Sphere);
-                        _ship.transform.position = new Vector3( stars[civils[i].home[0]].x,  stars[civils[i].home[0]].y,  stars[civils[i].home[0]].z);
+                        _ship.transform.localPosition = new Vector3(0, 0, 0);
                         _ship.name = "Ship" + (civils[i].ship.Count - 1).ToString();
                         _ship.transform.localScale = new Vector3(2, 2, 2);
                         _ship.AddComponent<TrailRenderer>();
@@ -223,7 +223,7 @@ public class Calculate : MonoBehaviour
                             case 0: { _ship.GetComponent<Renderer>().material = green; _ship.GetComponent<TrailRenderer>().material = greenl; break; }
                             case 2: { _ship.GetComponent<Renderer>().material = blue; _ship.GetComponent<TrailRenderer>().material = blue; break; }
                         }
-                        _ship.transform.parent = GameObject.Find("Galaxy/Star" + i.ToString()).GetComponent<Transform>();
+                        _ship.transform.parent = GameObject.Find("Galaxy/Star" + civils[i].home[0].ToString()).GetComponent<Transform>();
                         _ship.transform.localPosition = new Vector3(0, 0, 0);
                     }
             }
