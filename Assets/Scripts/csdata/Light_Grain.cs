@@ -1,9 +1,9 @@
 using System;
 
 [Serializable]
-class Biaxial_foil//二向箔
+class Light_Grain//光粒
 {
-    public Biaxial_foil(int num, int start, int target, Stars startstar, Stars targetstar)
+    public Light_Grain(int num, int start, int target, Stars startstar, Stars targetstar)
     {
         this.num = num;
         this.life = true;
@@ -13,11 +13,7 @@ class Biaxial_foil//二向箔
         this.total = Math.Sqrt((startstar.x - targetstar.x) * (startstar.x - targetstar.x)
             + (startstar.y - targetstar.y) * (startstar.y - targetstar.y) + (startstar.z - targetstar.z) * (startstar.z - targetstar.z));
 
-<<<<<<< HEAD
-        float asd = (float)(total / global.speed2d);
-=======
         float asd = (float)(total / Attack_2d.speed);
->>>>>>> c9ac9a4e942d5354bbaead34db92897d2fd98abf
         this.directionx = (targetstar.x - startstar.x) / asd;
         this.directiony = (targetstar.y - startstar.y) / asd;
         this.directionz = (targetstar.z - startstar.z) / asd;
