@@ -277,9 +277,9 @@ public class Calculate : MonoBehaviour
         //             GameObject.Find("Stars/Star" + j.ToString() + "/Ship").GetComponent<TrailRenderer>().time -= Time.deltaTime;
         //         else GameObject.Find("Stars/Star" + j.ToString() + "/Ship").GetComponent<TrailRenderer>().time = 1;
 
-        GameObject.Find("Canvas/ScoreBoard").GetComponent<Text>().text = "";
+        GameObject.Find("Canvas/UI/ScoreBoard").GetComponent<Text>().text = "";
         time += 1;//加一年
-        GameObject.Find("Canvas/Time").GetComponent<Text>().text = time.ToString() + "年";
+        GameObject.Find("Canvas/UI/Time").GetComponent<Text>().text = time.ToString() + "年";
 
         //生成新文明
         if (global.allowspawn)
@@ -313,13 +313,13 @@ public class Calculate : MonoBehaviour
                         stars[bfs[i].target].havetarget = false;
                         Destroy(GameObject.Find("Stars/Star" + bfs[i].target.ToString() + "/Ship").GetComponent<Transform>().gameObject);
                     }
-                    GameObject.Find("Canvas/Message1").GetComponent<Text>().text = bfs[i].target.ToString() + "受到降维打击，已经迁移位置";
+                    GameObject.Find("Canvas/UI/Message1").GetComponent<Text>().text = bfs[i].target.ToString() + "受到降维打击，已经迁移位置";
                 }
                 else//awsl
                 {
                     stars[bfs[i].target].life = false;
 
-                    GameObject.Find("Canvas/Message1").GetComponent<Text>().text = (bfs[i].target + 1).ToString() + "号文明受到降维打击，存活了" + (time - stars[bfs[i].target].lifetime).ToString() + "年";
+                    GameObject.Find("Canvas/UI/Message1").GetComponent<Text>().text = (bfs[i].target + 1).ToString() + "号文明受到降维打击，存活了" + (time - stars[bfs[i].target].lifetime).ToString() + "年";
                     Destroy(GameObject.Find("Stars/Star" + bfs[i].target.ToString()).GetComponent<Transform>().gameObject);
                     deathcnt += 1;
                 }
@@ -338,7 +338,7 @@ public class Calculate : MonoBehaviour
                 {
                     stars[it].helpcnt -= 1;
                 }
-                GameObject.Find("Canvas/Message1").GetComponent<Text>().text = (i + 1).ToString() + "号文明被消灭，存活了" + (time - stars[i].lifetime).ToString() + "年";
+                GameObject.Find("Canvas/UI/Message1").GetComponent<Text>().text = (i + 1).ToString() + "号文明被消灭，存活了" + (time - stars[i].lifetime).ToString() + "年";
                 Destroy(GameObject.Find("Stars/Star" + i.ToString()).GetComponent<Transform>().gameObject);
                 deathcnt += 1;
                 continue;
@@ -351,7 +351,7 @@ public class Calculate : MonoBehaviour
                     if (rd.Next() % global.techboom_probability == 0)
                     {
                         stars[i].techboomcnt += 1;
-                        GameObject.Find("Canvas/Message1").GetComponent<Text>().text = (i + 1).ToString() + "号文明发生第" + stars[i].techboomcnt.ToString() + "次技术爆炸";
+                        GameObject.Find("Canvas/UI/Message1").GetComponent<Text>().text = (i + 1).ToString() + "号文明发生第" + stars[i].techboomcnt.ToString() + "次技术爆炸";
                     }
             }
             if (stars[i].isout)
@@ -436,7 +436,7 @@ public class Calculate : MonoBehaviour
                             _bf.GetComponent<Renderer>().material = white;
                             _bf.transform.parent = GameObject.Find("Biaxial_foil").GetComponent<Transform>();
 
-                            GameObject.Find("Canvas/Message2").GetComponent<Text>().text = (i + 1).ToString() + "号文明发出二向箔，目标" + (target + 1).ToString() + "号文明";
+                            GameObject.Find("Canvas/UI/Message2").GetComponent<Text>().text = (i + 1).ToString() + "号文明发出二向箔，目标" + (target + 1).ToString() + "号文明";
                             continue;
                         }
 
@@ -444,7 +444,7 @@ public class Calculate : MonoBehaviour
                     stars[i].havetarget = true;
                     stars[i].ship = ship;
 
-                    GameObject.Find("Canvas/Message").GetComponent<Text>().text = (i + 1).ToString() + "号文明发出飞船，目标" + (target + 1).ToString() + "号文明";
+                    GameObject.Find("Canvas/UI/Message").GetComponent<Text>().text = (i + 1).ToString() + "号文明发出飞船，目标" + (target + 1).ToString() + "号文明";
 
                     GameObject _ship = GameObject.CreatePrimitive(PrimitiveType.Sphere);
                     _ship.transform.position = new Vector3(stars[i].x, stars[i].y, stars[i].z);
@@ -464,7 +464,7 @@ public class Calculate : MonoBehaviour
             }
         }
 
-        GameObject.Find("Canvas/ScoreBoard").GetComponent<Text>().text = "文明总数：" + (stars.Count - deathcnt).ToString()
+        GameObject.Find("Canvas/UI/ScoreBoard").GetComponent<Text>().text = "文明总数：" + (stars.Count - deathcnt).ToString()
             + "，fps:" + Math.Round(1.0 / Time.deltaTime).ToString() + "\n";
         if (sortscore)
         {
@@ -485,11 +485,11 @@ public class Calculate : MonoBehaviour
                 {
                     switch (temp[i].type)
                     {
-                        case 1: { GameObject.Find("Canvas/ScoreBoard").GetComponent<Text>().text += "<color=#FF0000>"; break; }
-                        case -1: { GameObject.Find("Canvas/ScoreBoard").GetComponent<Text>().text += "<color=#00FF00>"; break; }
-                        case 0: { GameObject.Find("Canvas/ScoreBoard").GetComponent<Text>().text += "<color=#FFFF00>"; break; }
+                        case 1: { GameObject.Find("Canvas/UI/ScoreBoard").GetComponent<Text>().text += "<color=#FF0000>"; break; }
+                        case -1: { GameObject.Find("Canvas/UI/ScoreBoard").GetComponent<Text>().text += "<color=#00FF00>"; break; }
+                        case 0: { GameObject.Find("Canvas/UI/ScoreBoard").GetComponent<Text>().text += "<color=#FFFF00>"; break; }
                     }
-                    GameObject.Find("Canvas/ScoreBoard").GetComponent<Text>().text += (temp[i].score > temp[i].scorelast ? "↑" : "↓") + temp[i].num.ToString() + "号文明得分：" + temp[i].score.ToString()
+                    GameObject.Find("Canvas/UI/ScoreBoard").GetComponent<Text>().text += (temp[i].score > temp[i].scorelast ? "↑" : "↓") + temp[i].num.ToString() + "号文明得分：" + temp[i].score.ToString()
                         + ",文明类型:" + (temp[i].isout ? "外向型" : "内向型") + "</color>\n";
                 }
 
@@ -501,11 +501,11 @@ public class Calculate : MonoBehaviour
                 {
                     switch (stars[i].type)
                     {
-                        case 1: { GameObject.Find("Canvas/ScoreBoard").GetComponent<Text>().text += "<color=#FF0000>"; break; }
-                        case -1: { GameObject.Find("Canvas/ScoreBoard").GetComponent<Text>().text += "<color=#00FF00>"; break; }
-                        case 0: { GameObject.Find("Canvas/ScoreBoard").GetComponent<Text>().text += "<color=#FFFF00>"; break; }
+                        case 1: { GameObject.Find("Canvas/UI/ScoreBoard").GetComponent<Text>().text += "<color=#FF0000>"; break; }
+                        case -1: { GameObject.Find("Canvas/UI/ScoreBoard").GetComponent<Text>().text += "<color=#00FF00>"; break; }
+                        case 0: { GameObject.Find("Canvas/UI/ScoreBoard").GetComponent<Text>().text += "<color=#FFFF00>"; break; }
                     }
-                    GameObject.Find("Canvas/ScoreBoard").GetComponent<Text>().text += (stars[i].score > stars[i].scorelast ? "↑" : "↓") + stars[i].num.ToString() + "号文明得分：" + stars[i].score.ToString()
+                    GameObject.Find("Canvas/UI/ScoreBoard").GetComponent<Text>().text += (stars[i].score > stars[i].scorelast ? "↑" : "↓") + stars[i].num.ToString() + "号文明得分：" + stars[i].score.ToString()
                         + ",文明类型:" + (stars[i].isout ? "外向型" : "内向型") + "</color>\n";
                 }
     }
