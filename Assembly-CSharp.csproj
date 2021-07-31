@@ -68,6 +68,11 @@
      <Compile Include="Assets\Scripts\HighLightControls\HighLightControlRed.cs" />
      <Compile Include="Assets\Scripts\HighLightControls\HighLightControlYellow.cs" />
      <Compile Include="Assets\Scripts\KeyBoardControl.cs" />
+     <Compile Include="Assets\Scripts\MobileMethods\MenuClick.cs" />
+     <Compile Include="Assets\Scripts\MobileMethods\Sort.cs" />
+     <Compile Include="Assets\Scripts\MobileMethods\ValueClick.cs" />
+     <Compile Include="Assets\Scripts\MobileMethods\ZoomBig.cs" />
+     <Compile Include="Assets\Scripts\MobileMethods\ZoomSmall.cs" />
      <Compile Include="Assets\Scripts\MusicControl.cs" />
      <Compile Include="Assets\Scripts\Rotate.cs" />
      <Compile Include="Assets\Scripts\SavingSystem\save.cs" />

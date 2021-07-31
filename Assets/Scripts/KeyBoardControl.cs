@@ -8,6 +8,8 @@ public class KeyBoardControl : MonoBehaviour
     void Start()
     {
         GameObject.Find("Canvas/Menu").GetComponent<CanvasGroup>().alpha = 0;
+        GameObject.Find("Canvas/Menu").GetComponent<CanvasGroup>().interactable = false;
+        GameObject.Find("Canvas/Menu").GetComponent<CanvasGroup>().blocksRaycasts = false;
         GameObject.Find("Canvas/Setting").GetComponent<CanvasGroup>().alpha = 0;
         GameObject.Find("Canvas/Setting").GetComponent<CanvasGroup>().interactable = false;
         GameObject.Find("Canvas/Setting").GetComponent<CanvasGroup>().blocksRaycasts = false;
@@ -23,6 +25,8 @@ public class KeyBoardControl : MonoBehaviour
             if (GameObject.Find("Canvas/Menu").GetComponent<CanvasGroup>().alpha >= 1)
             {
                 GameObject.Find("Canvas/Menu").GetComponent<CanvasGroup>().alpha = 1;
+                GameObject.Find("Canvas/Menu").GetComponent<CanvasGroup>().interactable = true;
+                GameObject.Find("Canvas/Menu").GetComponent<CanvasGroup>().blocksRaycasts = true;
                 show = true; open = false;
             }
 
@@ -33,6 +37,8 @@ public class KeyBoardControl : MonoBehaviour
             if (GameObject.Find("Canvas/Menu").GetComponent<CanvasGroup>().alpha <= 0)
             {
                 GameObject.Find("Canvas/Menu").GetComponent<CanvasGroup>().alpha = 0;
+                GameObject.Find("Canvas/Menu").GetComponent<CanvasGroup>().interactable = false;
+                GameObject.Find("Canvas/Menu").GetComponent<CanvasGroup>().blocksRaycasts = false;
                 show = false; close = false;
             }
         }

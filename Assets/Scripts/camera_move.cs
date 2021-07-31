@@ -20,7 +20,7 @@ public class camera_move : MonoBehaviour
     {
         transform.position = new Vector3(x, y, z);
     }
-    Vector2 now = new Vector2();
+    public static Vector2 now = new Vector2();
     // Update is called once per frame
     void Update()
     {
