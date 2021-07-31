@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.IO;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -8,161 +7,21 @@ public class Calculate : MonoBehaviour
 {
     public Material red, yellow, green, white, blue;
     public Material redl, yellowl, greenl;
-    static Material reds, yellows, greens, blues, whites;
-    static Material redls, yellowls, greenls;
     public static bool reload = false;
     public static bool execute = true, sortscore = false;
     static int time = 0;
     static List<Stars> stars = new List<Stars>(); static int deathcnt = 0;
     static List<Biaxial_foil> bfs = new List<Biaxial_foil>();
     System.Random rd = new System.Random();
-    public static void savefile(string path)
-    {
-        StreamWriter sw = new StreamWriter(path);
-
-        sw.WriteLine(stars.Count);
-        for (int i = 0; i < stars.Count; i++)
-        {
-            stars[i].ToBinary(sw);
-        }
-        sw.WriteLine(bfs.Count);
-        for (int i = 0; i < bfs.Count; i++)
-        {
-            sw.Write(bfs[i].ToBinary());
-        }
-
-        sw.Close();
-        sw.Dispose();
-    }
-    public static void loadfile(string path)
-    {
-        StreamReader sr = new StreamReader(path);
-
-        time = 0;
-        ReadGlobal();
-        GameObject.Find("Canvas/Message").GetComponent<Text>().text = "初始化完毕";
-        for (int i = 0; i < stars.Count; i++)
-            if (stars[i].life)
-                Destroy(GameObject.Find("Stars/Star" + i.ToString()).GetComponent<Transform>().gameObject);
-        stars.Clear(); deathcnt = 0;
-        for (int i = 0; i < bfs.Count; i++)
-            if (bfs[i].life)
-                Destroy(GameObject.Find("Biaxial_foil/bf" + i.ToString()).GetComponent<Transform>().gameObject);
-        bfs.Clear();
-
-        int starcount = int.Parse(sr.ReadLine());
-        for (int i = 0; i < starcount; i++)
-        {
-            string s=sr.ReadLine();
-            Debug.Log(i.ToString()+s);
-            Stars star = new Stars();
-            star.num = int.Parse(s);
-            star.scorelast = int.Parse(sr.ReadLine());
-            star.x = float.Parse(sr.ReadLine());
-            star.y = float.Parse(sr.ReadLine());
-            star.z = float.Parse(sr.ReadLine());
-            star.score = int.Parse(sr.ReadLine());
-            star.life = bool.Parse(sr.ReadLine());
-            star.type = int.Parse(sr.ReadLine());
-            star.isout = bool.Parse(sr.ReadLine());
-            star.lifetime = int.Parse(sr.ReadLine());
-            star.havetarget = bool.Parse(sr.ReadLine());
-            if (star.havetarget)
-            {
-                Ships ship = new Ships();
-                ship.start = int.Parse(sr.ReadLine());
-                ship.target = int.Parse(sr.ReadLine());
-                ship.distance = double.Parse(sr.ReadLine());
-                ship.total = double.Parse(sr.ReadLine());
-                ship.stats = int.Parse(sr.ReadLine());
-                ship.defense = double.Parse(sr.ReadLine());
-                ship.type = int.Parse(sr.ReadLine());
-                ship.direction = new Vector3(float.Parse(sr.ReadLine()), float.Parse(sr.ReadLine()), float.Parse(sr.ReadLine()));
-                ship.targetv = new Vector3(float.Parse(sr.ReadLine()), float.Parse(sr.ReadLine()), float.Parse(sr.ReadLine()));
-
-                GameObject _ship = GameObject.CreatePrimitive(PrimitiveType.Sphere);
-                _ship.transform.position = new Vector3(star.x, star.y, star.z);
-                _ship.name = "Ship";
-                _ship.transform.localScale = new Vector3(2, 2, 2);
-                _ship.AddComponent<TrailRenderer>();
-                _ship.GetComponent<TrailRenderer>().time = 1;
-                switch (ship.type)
-                {
-                    case 1: { _ship.GetComponent<Renderer>().material = reds; _ship.GetComponent<TrailRenderer>().material = redls; break; }
-                    case -1: { _ship.GetComponent<Renderer>().material = yellows; _ship.GetComponent<TrailRenderer>().material = yellowls; break; }
-                    case 0: { _ship.GetComponent<Renderer>().material = greens; _ship.GetComponent<TrailRenderer>().material = greenls; break; }
-                }
-                _ship.transform.parent = GameObject.Find("Stars/Star" + i.ToString()).GetComponent<Transform>();
-                _ship.transform.localPosition = new Vector3(0, 0, 0);
-            }
-            else star.ship = new Ships();
-            star.helpcnt = int.Parse(sr.ReadLine());
-            int helpcnt = int.Parse(sr.ReadLine());
-            for (int j = 0; j < helpcnt; j++)
-                star.helplist.Add(int.Parse(sr.ReadLine()));
-            star.techboomcnt = int.Parse(sr.ReadLine());
-            star.time2d = int.Parse(sr.ReadLine());
-            stars.Add(star);
-
-            GameObject starl = GameObject.CreatePrimitive(PrimitiveType.Sphere);
-            starl.transform.position = new Vector3(stars[stars.Count - 1].x, stars[stars.Count - 1].y, stars[stars.Count - 1].z);
-            starl.name = "Star" + (stars.Count - 1).ToString();
-            starl.transform.localScale = new Vector3(5, 5, 5);
-            starl.AddComponent<HighlightableObject>();
-            switch (stars[stars.Count - 1].type)
-            {
-                case 1: { starl.AddComponent<HighLightControlRed>(); starl.GetComponent<Renderer>().material = reds; break; }
-                case -1: { starl.AddComponent<HighLightControlGreen>(); starl.GetComponent<Renderer>().material = greens; break; }
-                case 0: { starl.AddComponent<HighLightControlYellow>(); starl.GetComponent<Renderer>().material = yellows; break; }
-            }
-            starl.AddComponent<TrailRenderer>();
-            starl.GetComponent<TrailRenderer>().time = 2;
-            starl.GetComponent<TrailRenderer>().material = blues;
-            starl.transform.parent = GameObject.Find("Stars").GetComponent<Transform>();
-        }
-
-        int bfcount = int.Parse(sr.ReadLine());
-        for (int i = 0; i < bfcount; i++)
-        {
-            Biaxial_foil bf = new Biaxial_foil();
-            bf.num = int.Parse(sr.ReadLine());
-            bf.life = bool.Parse(sr.ReadLine());
-            bf.start = int.Parse(sr.ReadLine());
-            bf.target = int.Parse(sr.ReadLine());
-            bf.distance = double.Parse(sr.ReadLine());
-            bf.total = double.Parse(sr.ReadLine());
-            bf.direction = new Vector3(float.Parse(sr.ReadLine()), float.Parse(sr.ReadLine()), float.Parse(sr.ReadLine()));
-            bfs.Add(bf);
-
-            GameObject _bf = GameObject.CreatePrimitive(PrimitiveType.Sphere);
-            _bf.transform.position = new Vector3(stars[i].x, stars[i].y, stars[i].z);
-            _bf.name = "bf" + (bfs.Count - 1).ToString();
-            _bf.transform.localScale = new Vector3(2, 2, 2);
-            _bf.AddComponent<TrailRenderer>();
-            _bf.GetComponent<TrailRenderer>().time = 1;
-            _bf.GetComponent<TrailRenderer>().material = whites;
-            _bf.GetComponent<Renderer>().material = whites;
-            _bf.transform.parent = GameObject.Find("Biaxial_foil").GetComponent<Transform>();
-        }
-    }
     // Start is called before the first frame update
     void Start()
     {
-        reds = red; yellows = yellow; greens = green; blues = blue; whites = white;
-        redls = redl; yellowls = yellowl; greenls = greenl;
-
-        if (global.peace + global.middle + global.attacks != 100)
-        {
-            execute = false;
-            Debug.LogError("生成概率出错，无法执行程序");
-        }
         Load();
     }
     public void Load()
     {
         time = 0;
-        ReadGlobal();
-        GameObject.Find("Canvas/Message").GetComponent<Text>().text = "初始化完毕";
+        GameObject.Find("Canvas/UI/Message").GetComponent<Text>().text = "初始化完毕";
         for (int i = 0; i < stars.Count; i++)
             if (stars[i].life)
                 Destroy(GameObject.Find("Stars/Star" + i.ToString()).GetComponent<Transform>().gameObject);
@@ -172,52 +31,15 @@ public class Calculate : MonoBehaviour
                 Destroy(GameObject.Find("Biaxial_foil/bf" + i.ToString()).GetComponent<Transform>().gameObject);
         bfs.Clear();
 
-        for (int i = 0; i < global.startcnt; i++)
+        for (int i = 0; i < Init.startcnt; i++)
             spawnstar();
-    }
-    static void ReadGlobal()
-    {
-        if (File.Exists(Application.dataPath + @"\start_up_parameter.txt"))
-        {
-            GameObject.Find("Canvas/Message1").GetComponent<Text>().text = "自定义参数读取失败，将使用默认值。";
-            StreamReader sr = new StreamReader(Application.dataPath + @"\start_up_parameter.txt");
-            global.startcnt = int.Parse(sr.ReadLine());
-            global.startscore = int.Parse(sr.ReadLine());
-            global.travel_speed = double.Parse(sr.ReadLine());
-            global.develop = int.Parse(sr.ReadLine());
-            global.cooperation = int.Parse(sr.ReadLine());
-            global.attack = int.Parse(sr.ReadLine());
-            global.allowspawn = bool.Parse(sr.ReadLine());
-            global.spawnprobability = int.Parse(sr.ReadLine());
-            global.cooldowntime = int.Parse(sr.ReadLine());
-            global.rangex = double.Parse(sr.ReadLine());
-            global.rangey = double.Parse(sr.ReadLine());
-            global.rangez = double.Parse(sr.ReadLine());
-            global.defensetimes = int.Parse(sr.ReadLine());
-            global.peace = int.Parse(sr.ReadLine());
-            global.middle = int.Parse(sr.ReadLine());
-            global.attacks = int.Parse(sr.ReadLine());
-            global.allowtechboom = bool.Parse(sr.ReadLine());
-            global.techboommax = int.Parse(sr.ReadLine());
-            global.techboom_addon = int.Parse(sr.ReadLine());
-            global.techboom_probability = int.Parse(sr.ReadLine());
-            global.allow2d = bool.Parse(sr.ReadLine());
-            global.score2d = int.Parse(sr.ReadLine());
-            global.speed2d = double.Parse(sr.ReadLine());
-            global.cooldown2d = int.Parse(sr.ReadLine());
-            global.allow_attack_help = bool.Parse(sr.ReadLine());
-            sr.Close();
-            GameObject.Find("Canvas/Message1").GetComponent<Text>().text = "自定义参数读取成功！";
-        }
-        else
-            GameObject.Find("Canvas/Message1").GetComponent<Text>().text = "没有找到自定义参数文件，将使用默认值。";
     }
     bool isattack(int start, int target)
     {
         if (stars[start].type == 1) return true;
         if (stars[start].type == -1)
         {
-            if (stars[target].type == 1) if (global.allow_attack_help) return false; else return true;
+            if (stars[target].type == 1) if (Civil.allow_attack_help) return false; else return true;
             return false;
         }
         if (stars[start].type == 0)
@@ -230,12 +52,12 @@ public class Calculate : MonoBehaviour
     void spawnstar()
     {
         int num = rd.Next() % 100, asd;
-        if (0 <= num && num < global.peace) asd = -1;
-        else if (global.peace <= num && num < global.peace + global.middle) asd = 0;
+        if (0 <= num && num < SpawnCivil.peace) asd = -1;
+        else if (SpawnCivil.peace <= num && num < SpawnCivil.peace + SpawnCivil.middle) asd = 0;
         else asd = 1;
 
-        stars.Add(new Stars(stars.Count + 1, (float)((rd.NextDouble() - 0.5) * 2 * global.rangex), (float)((rd.NextDouble() - 0.5) * 2 * global.rangey),
-            (float)((rd.NextDouble() - 0.5) * 2 * global.rangez), asd, rd.Next() % 2 == 1, time));
+        stars.Add(new Stars(stars.Count + 1, (float)((rd.NextDouble() - 0.5) * 2 * SpawnCivil.rangex), (float)((rd.NextDouble() - 0.5) * 2 * SpawnCivil.rangey),
+            (float)((rd.NextDouble() - 0.5) * 2 * SpawnCivil.rangez), asd, rd.Next() % 2 == 1, time));
 
         GameObject star = GameObject.CreatePrimitive(PrimitiveType.Sphere);
         star.transform.position = new Vector3(stars[stars.Count - 1].x, stars[stars.Count - 1].y, stars[stars.Count - 1].z);
@@ -282,8 +104,8 @@ public class Calculate : MonoBehaviour
         GameObject.Find("Canvas/UI/Time").GetComponent<Text>().text = time.ToString() + "年";
 
         //生成新文明
-        if (global.allowspawn)
-            if (rd.Next() % global.spawnprobability == 0)
+        if (SpawnCivil.allow)
+            if (rd.Next() % SpawnCivil.probability == 0)
                 spawnstar();
 
         for (int i = 0; i < bfs.Count; i++)//二向箔计算
@@ -296,16 +118,16 @@ public class Calculate : MonoBehaviour
                 continue;
             }
             GameObject.Find("Biaxial_foil/bf" + i.ToString()).GetComponent<Transform>().position += bfs[i].direction;
-            bfs[i].distance += global.speed2d;
+            bfs[i].distance += Attack_2d.speed;
             if (bfs[i].distance >= bfs[i].total)//到达目的地
             {
                 bfs[i].life = false;
                 Destroy(GameObject.Find("Biaxial_foil/bf" + i.ToString()).GetComponent<Transform>().gameObject);
                 if (stars[bfs[i].target].helpcnt > 0 && stars[bfs[i].target].type != 1)//欸，我溜了（当有文明帮助）
                 {
-                    stars[bfs[i].target].x = (float)((rd.NextDouble() - 0.5) * 2 * global.rangex);
-                    stars[bfs[i].target].y = (float)((rd.NextDouble() - 0.5) * 2 * global.rangey);
-                    stars[bfs[i].target].z = (float)((rd.NextDouble() - 0.5) * 2 * global.rangez);
+                    stars[bfs[i].target].x = (float)((rd.NextDouble() - 0.5) * 2 * SpawnCivil.rangex);
+                    stars[bfs[i].target].y = (float)((rd.NextDouble() - 0.5) * 2 * SpawnCivil.rangey);
+                    stars[bfs[i].target].z = (float)((rd.NextDouble() - 0.5) * 2 * SpawnCivil.rangez);
                     GameObject.Find("Stars/Star" + bfs[i].target.ToString()).GetComponent<Transform>().position
                         = new Vector3(stars[bfs[i].target].x, stars[bfs[i].target].y, stars[bfs[i].target].z);
                     if (stars[bfs[i].target].havetarget)
@@ -313,7 +135,7 @@ public class Calculate : MonoBehaviour
                         stars[bfs[i].target].havetarget = false;
                         Destroy(GameObject.Find("Stars/Star" + bfs[i].target.ToString() + "/Ship").GetComponent<Transform>().gameObject);
                     }
-                    GameObject.Find("Canvas/UI/Message1").GetComponent<Text>().text = bfs[i].target.ToString() + "受到降维打击，已经迁移位置";
+                    GameObject.Find("Canvas/UI/Message1").GetComponent<Text>().text = bfs[i].target.ToString() + "号文明受到降维打击，已经迁移位置";
                 }
                 else//awsl
                 {
@@ -344,11 +166,11 @@ public class Calculate : MonoBehaviour
                 continue;
             }
 
-            stars[i].score += global.develop + stars[i].helpcnt * global.cooperation + stars[i].techboomcnt * global.techboom_addon;//加分
-            if (global.allowtechboom)//技术爆炸代码
+            stars[i].score += Speed.develop + stars[i].helpcnt * Speed.cooperation + stars[i].techboomcnt * TechBoom.addon;//加分
+            if (TechBoom.allow)//技术爆炸代码
             {
-                if (stars[i].techboomcnt < global.techboommax)
-                    if (rd.Next() % global.techboom_probability == 0)
+                if (stars[i].techboomcnt < TechBoom.max)
+                    if (rd.Next() % TechBoom.probability == 0)
                     {
                         stars[i].techboomcnt += 1;
                         GameObject.Find("Canvas/UI/Message1").GetComponent<Text>().text = (i + 1).ToString() + "号文明发生第" + stars[i].techboomcnt.ToString() + "次技术爆炸";
@@ -367,7 +189,7 @@ public class Calculate : MonoBehaviour
                     else if (stars[i].ship.stats == 0)//飞行状态
                     {
                         GameObject.Find("Stars/Star" + i.ToString() + "/Ship").GetComponent<Transform>().position += stars[i].ship.direction;
-                        stars[i].ship.distance += global.travel_speed;
+                        stars[i].ship.distance += Speed.travel_speed;
                         if (stars[i].ship.distance >= stars[i].ship.total)//到达目的地
                             stars[i].ship.stats = 1;
                     }
@@ -405,8 +227,8 @@ public class Calculate : MonoBehaviour
                             }
                             else
                             {
-                                stars[stars[i].ship.target].score += global.attack;
-                                stars[i].ship.defense += global.attack;
+                                stars[stars[i].ship.target].score += Speed.attack;
+                                stars[i].ship.defense += Speed.attack;
                             }
                         }
                     }
@@ -414,12 +236,12 @@ public class Calculate : MonoBehaviour
                 else//新建飞船实体
                 {
                     if (stars.Count == 1) continue;//欸，人呢？
-                    if (stars[i].score < global.cooldowntime) continue;//发展不足，同志仍需努力(～￣▽￣)～
+                    if (stars[i].score < Civil.cooldowntime) continue;//发展不足，同志仍需努力(～￣▽￣)～
 
                     int target = rd.Next() % stars.Count;
 
-                    if (global.allow2d && stars[i].score >= global.score2d)//二向箔启用判断
-                        if (stars[target].score > stars[i].score && isattack(i, target) && time - stars[i].time2d >= global.cooldown2d / 2)//二向箔，条件：目标文明得分大于发出者得分一半
+                    if (Attack_2d.allow && stars[i].score >= Attack_2d.score)//二向箔启用判断
+                        if (stars[target].score > stars[i].score / 2 && isattack(i, target) && time - stars[i].time2d >= Attack_2d.cooldown)//二向箔，条件：目标文明得分大于发出者得分一半
                         {
                             stars[i].time2d = time;
 
@@ -440,7 +262,7 @@ public class Calculate : MonoBehaviour
                             continue;
                         }
 
-                    Ships ship = new Ships(i, target, stars[i].score / global.defensetimes, stars[i], stars[target]);
+                    Ships ship = new Ships(i, target, stars[i].score / Civil.defensetimes, stars[i], stars[target]);
                     stars[i].havetarget = true;
                     stars[i].ship = ship;
 
@@ -454,9 +276,9 @@ public class Calculate : MonoBehaviour
                     _ship.GetComponent<TrailRenderer>().time = 1;
                     switch (ship.type)
                     {
-                        case 1: { _ship.GetComponent<Renderer>().material = red; _ship.GetComponent<TrailRenderer>().material = redl; break; }
-                        case -1: { _ship.GetComponent<Renderer>().material = yellow; _ship.GetComponent<TrailRenderer>().material = yellowl; break; }
-                        case 0: { _ship.GetComponent<Renderer>().material = green; _ship.GetComponent<TrailRenderer>().material = greenl; break; }
+                        case 1: { _ship.GetComponent<Renderer>().material = redl; _ship.GetComponent<TrailRenderer>().material = redl; break; }
+                        case -1: { _ship.GetComponent<Renderer>().material = yellowl; _ship.GetComponent<TrailRenderer>().material = yellowl; break; }
+                        case 0: { _ship.GetComponent<Renderer>().material = greenl; _ship.GetComponent<TrailRenderer>().material = greenl; break; }
                     }
                     _ship.transform.parent = GameObject.Find("Stars/Star" + i.ToString()).GetComponent<Transform>();
                     _ship.transform.localPosition = new Vector3(0, 0, 0);

@@ -20,7 +20,7 @@ class Ships
         if (startstar.type == 1) type = 1;
         if (startstar.type == -1)
         {
-            if (targetstar.type == 1) if (global.allow_attack_help) type = 0; else type = 1;
+            if (targetstar.type == 1) if (Civil.allow_attack_help) type = 0; else type = 1;
             if (targetstar.type == -1) type = 0;
             if (targetstar.type == 0) type = 0;
         }
@@ -31,7 +31,7 @@ class Ships
             if (targetstar.type == 0) type = -1;
         }
 
-        float asd = (float)(total / global.travel_speed);
+        float asd = (float)(total / Speed.travel_speed);
         this.direction = new Vector3((targetstar.x - startstar.x) / asd, (targetstar.y - startstar.y) / asd, (targetstar.z - startstar.z) / asd);
 
         this.targetv = new Vector3(targetstar.x, targetstar.y, targetstar.z);

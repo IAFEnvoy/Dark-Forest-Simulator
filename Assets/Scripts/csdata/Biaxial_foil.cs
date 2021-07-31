@@ -15,7 +15,7 @@ class Biaxial_foil//二向箔
         this.total = Math.Sqrt((startstar.x - targetstar.x) * (startstar.x - targetstar.x)
             + (startstar.y - targetstar.y) * (startstar.y - targetstar.y) + (startstar.z - targetstar.z) * (startstar.z - targetstar.z));
 
-        float asd = (float)(total / global.speed2d);
+        float asd = (float)(total / Attack_2d.speed);
         this.direction = new Vector3((targetstar.x - startstar.x) / asd, (targetstar.y - startstar.y) / asd, (targetstar.z - startstar.z) / asd);
     }
     public string ToBinary(){
